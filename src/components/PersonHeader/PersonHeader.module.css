@@ -1,0 +1,14 @@
+.PersonHeader {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: center;
+
+    padding: 0 10px;
+
+    font-weight: bold;
+    font-size: large;
+    border-bottom: 1px solid black;
+
+    height: 50px;
+}
