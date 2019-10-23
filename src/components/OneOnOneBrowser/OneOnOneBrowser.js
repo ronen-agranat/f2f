@@ -1,7 +1,7 @@
 import React from 'react';
-import OneOnOneMinutes from "../OneOnOneMinutes/OneOnOneMinutes";
-import AddSessionButton from "./AddSessionButton/AddSessionButton";
-import MoreSessionTail from "./MoreSessionsTail/MoreSessionsTail";
+import OneOnOneMinutes from '../OneOnOneMinutes/OneOnOneMinutes';
+import AddSessionButton from './AddSessionButton/AddSessionButton';
+import MoreSessionTail from './MoreSessionsTail/MoreSessionsTail';
 
 import { format } from 'date-fns';
 
@@ -12,21 +12,49 @@ const OneOnOneBrowser = (props) => {
 
   const [sessions, setSessions] = React.useState([
     {
-      id: 1,
-      date: "18 October 2019",
-      notes: "Some notes go here"
+      id: 2,
+      date: '18 October 2019',
+      followUps: 'Follow-ups go here',
+      newBusiness: 'New business goes here',
+      nextTime: 'Next time goes here'
     },
     {
-      id: 2,
-      date: "11 October 2019",
-      notes: "Other notes go here"
+      id: 1,
+      date: '11 October 2019',
+      followUps: 'Follow-ups go here',
+      newBusiness: 'New business goes here',
+      nextTime: 'Next time goes here'
     },
   ]);
 
-  const minutesChanged = React.useCallback((id, date, text) => {
+  const followUpsChanged = React.useCallback((id, event) => {
     const newSessions = sessions.map(s => {
       if (s.id === id) {
-        return { id: id, date: date, notes: text };
+        return { ...s, followUps: event.target.value };
+      } else {
+        return s;
+      }
+    });
+
+    setSessions(newSessions);
+  }, [sessions]);
+
+  const newBusinessChanged = React.useCallback((id, event) => {
+    const newSessions = sessions.map(s => {
+      if (s.id === id) {
+        return { ...s, newBusiness: event.target.value };
+      } else {
+        return s;
+      }
+    });
+
+    setSessions(newSessions);
+  }, [sessions]);
+
+  const nextTimeChanged = React.useCallback((id, event) => {
+    const newSessions = sessions.map(s => {
+      if (s.id === id) {
+        return { ...s, nextTime: event.target.value };
       } else {
         return s;
       }
@@ -37,13 +65,30 @@ const OneOnOneBrowser = (props) => {
 
   const sessionAdded = React.useCallback(() => {
     const date = format(new Date(), 'dd LLLL yyyy');
-    setSessions([{date: date, id: maxId, notes: "New note"}, ...sessions]);
+
+    // Don't add a session if there already is one for today
+    if (sessions.find(s => s.date === date)) {
+      alert('There already is a session for today');
+      return;
+    }
+
+    setSessions([{
+      date: date,
+      id: maxId,
+      followUps: 'Follow-ups',
+      nextTime: 'Next time',
+      newBusiness: 'New business'},
+      ...sessions]
+    );
     setMaxId(maxId + 1);
   }, [sessions, maxId]);
 
   const oneOnOneMinutes = React.useMemo(() => sessions.map(s =>
-    <OneOnOneMinutes id={s.id} key={s.id} date={s.date} notes={s.notes} notesChanged={minutesChanged}/>
-  ), [sessions, minutesChanged]);
+    <OneOnOneMinutes id={s.id} key={s.id} date={s.date}
+                     followUps={s.followUps} followUpsChanged={followUpsChanged}
+                     nextTime={s.nextTime} nextTimeChanged={nextTimeChanged}
+                     newBusiness={s.newBusiness} newBusinessChanged={newBusinessChanged}/>
+  ), [sessions, followUpsChanged, newBusinessChanged, nextTimeChanged]);
 
 
   return (

@@ -1,0 +1,10 @@
+.OneOnOneNotes {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+}
+
+.OneOnOneNotes textarea {
+    width: 200px;
+    height: 100px;
+}

@@ -1,26 +1,29 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 
+import OneOnOneNotes from "./OneOnOneNotes/OneOnOneNotes";
 import styles from './OneOnOneMinutes.module.css'
 
 const OneOnOneMinutes = (props) => {
-  const notesChanged = React.useCallback((event) => {
-    props.notesChanged(props.id, props.date, event.target.value);
-  }, [props]);
-
   return (
     <div className={styles.OneOnOneMinutes}>
       <p>{props.date}</p>
-      <textarea onChange={notesChanged} value={props.notes} />
+      <OneOnOneNotes followUps={props.followUps} followUpsChanged={(event) => props.followUpsChanged(props.id, event)}
+                     newBusiness={props.newBusiness} newBusinessChanged={(event) => props.newBusinessChanged(props.id, event)}
+                     nextTime={props.nextTime} nextTimeChanged={(event) => props.nextTimeChanged(props.id, event)} />
     </div>
   );
 }
 
 OneOnOneMinutes.propTypes = {
   date: PropTypes.string.isRequired,
-  notes: PropTypes.string.isRequired,
-  notesChanged: PropTypes.func.isRequired,
-  id: PropTypes.number.isRequired
+  id: PropTypes.number.isRequired,
+  followUpsChanged: PropTypes.func.isRequired,
+  newBusinessChanged: PropTypes.func.isRequired,
+  nextTimeChanged: PropTypes.func.isRequired,
+  followUps: PropTypes.string.isRequired,
+  newBusiness: PropTypes.string.isRequired,
+  nextTime: PropTypes.string.isRequired
 }
 
 export default OneOnOneMinutes;
