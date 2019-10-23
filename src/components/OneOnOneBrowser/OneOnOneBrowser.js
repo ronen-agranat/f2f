@@ -3,6 +3,8 @@ import OneOnOneMinutes from "../OneOnOneMinutes/OneOnOneMinutes";
 import AddSessionButton from "./AddSessionButton/AddSessionButton";
 import MoreSessionTail from "./MoreSessionsTail/MoreSessionsTail";
 
+import { format } from 'date-fns';
+
 import styles from './OneOnOneBrowser.module.css';
 
 const OneOnOneBrowser = (props) => {
@@ -34,8 +36,7 @@ const OneOnOneBrowser = (props) => {
   }, [sessions]);
 
   const sessionAdded = React.useCallback(() => {
-    // FIXME
-    const date = new Date().toJSON().slice(0,10).replace(/-/g,'/' );
+    const date = format(new Date(), 'dd LLLL yyyy');
     setSessions([{date: date, id: maxId, notes: "New note"}, ...sessions]);
     setMaxId(maxId + 1);
   }, [sessions, maxId]);
@@ -48,7 +49,6 @@ const OneOnOneBrowser = (props) => {
   return (
     <div className={styles.OneOnOneBrowser}>
       <AddSessionButton onSessionAdded={sessionAdded}/>
-
       {oneOnOneMinutes}
       <MoreSessionTail/>
     </div>
