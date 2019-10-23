@@ -5,9 +5,18 @@ import styles from './OneOnOneNotes.module.css';
 const OneOnOneNotes = (props) => {
   return (
     <div className={styles.OneOnOneNotes}>
-      <textarea onChange={props.followUpsChanged} value={props.followUps} />
-      <textarea onChange={props.newBusinessChanged} value={props.newBusiness} />
-      <textarea onChange={props.nextTimeChanged} value={props.nextTime} />
+      <div>
+        <p>Follow-ups</p>
+        <textarea onChange={props.followUpsChanged} value={props.followUps} />
+      </div>
+      <div>
+        <p>New business</p>
+        <textarea onChange={props.newBusinessChanged} value={props.newBusiness} />
+      </div>
+      <div>
+        <p>Next time</p>
+        <textarea onChange={props.nextTimeChanged} value={props.nextTime} />
+      </div>
     </div>
 );
 }

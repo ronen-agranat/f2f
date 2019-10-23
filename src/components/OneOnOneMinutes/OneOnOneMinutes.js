@@ -7,7 +7,7 @@ import styles from './OneOnOneMinutes.module.css'
 const OneOnOneMinutes = (props) => {
   return (
     <div className={styles.OneOnOneMinutes}>
-      <p>{props.date}</p>
+      <div>{props.date}</div>
       <OneOnOneNotes followUps={props.followUps} followUpsChanged={(event) => props.followUpsChanged(props.id, event)}
                      newBusiness={props.newBusiness} newBusinessChanged={(event) => props.newBusinessChanged(props.id, event)}
                      nextTime={props.nextTime} nextTimeChanged={(event) => props.nextTimeChanged(props.id, event)} />

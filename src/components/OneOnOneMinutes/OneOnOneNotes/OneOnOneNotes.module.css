@@ -8,3 +8,9 @@
     width: 200px;
     height: 100px;
 }
+
+.OneOnOneNotes p {
+    font-size: small;
+    font-weight: bold;
+    padding: 0;
+}
