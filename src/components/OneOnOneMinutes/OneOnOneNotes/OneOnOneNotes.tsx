@@ -1,8 +1,17 @@
-import React from 'react';
+import React, {ChangeEvent} from 'react';
 import PropTypes from 'prop-types';
 import styles from './OneOnOneNotes.module.css';
 
-const OneOnOneNotes = (props) => {
+interface OneOnOneProps {
+    followUpsChanged: (event: ChangeEvent<HTMLTextAreaElement>) => void;
+    newBusinessChanged: (event: ChangeEvent<HTMLTextAreaElement>) => void;
+    nextTimeChanged: (event: ChangeEvent<HTMLTextAreaElement>) => void;
+    followUps: string;
+    newBusiness: string;
+    nextTime: string;
+}
+
+const OneOnOneNotes = (props: OneOnOneProps) => {
   return (
     <div className={styles.OneOnOneNotes}>
       <div>

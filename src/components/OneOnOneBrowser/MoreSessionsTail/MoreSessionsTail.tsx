@@ -1,6 +1,6 @@
 import React from 'react';
 
-const MoreSessionTail = (props) => {
+const MoreSessionTail = () => {
   return (
     <div>
       <strong>

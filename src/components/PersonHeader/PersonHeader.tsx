@@ -1,7 +1,7 @@
 import React from 'react';
 import styles from './PersonHeader.module.css';
 
-const PersonHeader = (props) => {
+const PersonHeader = () => {
   return (
     <div className={styles.PersonHeader}>
       <div>ProfilePic</div>

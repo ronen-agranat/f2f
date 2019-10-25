@@ -4,7 +4,7 @@ import OneOnOneBrowser from "../OneOnOneBrowser/OneOnOneBrowser";
 
 import styles from './PersonCard.module.css';
 
-const PersonCard = (props) => {
+const PersonCard = () => {
   return (
     <div className={styles.PersonCard}>
       <PersonHeader/>

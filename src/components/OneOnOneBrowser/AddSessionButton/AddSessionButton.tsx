@@ -1,7 +1,11 @@
-import React from 'react';
+import React, { MouseEvent } from 'react';
 import PropTypes from 'prop-types';
 
-const AddSessionButton = (props) => {
+interface AddSessionProps {
+  onSessionAdded: (event: MouseEvent) => void;
+}
+
+const AddSessionButton = (props: AddSessionProps) => {
   return (
     <button onClick={props.onSessionAdded}>+</button>
   );
