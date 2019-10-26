@@ -1,4 +1,4 @@
-import React, { ChangeEvent } from "react";
+import React, {ChangeEvent, useState} from "react";
 import OneOnOneMinutes from "../OneOnOneMinutes/OneOnOneMinutes";
 import AddSessionButton from "./AddSessionButton/AddSessionButton";
 import MoreSessionTail from "./MoreSessionsTail/MoreSessionsTail";
@@ -16,9 +16,12 @@ interface ISession {
 }
 
 const OneOnOneBrowser = () => {
-  const [maxId, setMaxId] = React.useState<number>(3);
+  // TODO: Just for prototype to know what id new sessions should have; this would be handled by the data-store in
+  // future
+  const [maxId, setMaxId] = useState<number>(3);
 
-  const [sessions, setSessions] = React.useState<Array<ISession>>([
+  // TODO: In the future, the list of sessions would come from the back-end
+  const [sessions, setSessions] = useState<Array<ISession>>([
     {
       id: 2,
       date: "18 October 2019",
@@ -34,6 +37,9 @@ const OneOnOneBrowser = () => {
       nextTime: "Next time goes here"
     }
   ]);
+
+  // Whether all sessions should be shown or just the current session
+  const [showAllSessions, setShowAllSessions] = useState(false);
 
   const followUpsChanged = (
     id: number,
@@ -102,7 +108,12 @@ const OneOnOneBrowser = () => {
     setMaxId(maxId + 1);
   }, [sessions, maxId]);
 
-  const oneOnOneMinutes = sessions.map(s => (
+  const toggleShowMoreSessions = () => {
+    setShowAllSessions(!showAllSessions);
+  };
+
+  // TODO: Don't compute this whole thing if showing only first element
+  let oneOnOneMinutes = sessions.map(s => (
     <OneOnOneMinutes
       id={s.id}
       key={s.id}
@@ -116,11 +127,15 @@ const OneOnOneBrowser = () => {
     />
   ));
 
+  if (!showAllSessions) {
+    oneOnOneMinutes = [oneOnOneMinutes[0]];
+  }
+
   return (
     <div className={styles.OneOnOneBrowser}>
       <AddSessionButton onSessionAdded={sessionAdded} />
       {oneOnOneMinutes}
-      <MoreSessionTail />
+      <MoreSessionTail clicked={toggleShowMoreSessions} activated={showAllSessions}/>
     </div>
   );
 };
