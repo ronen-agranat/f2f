@@ -99,9 +99,9 @@ const OneOnOneBrowser = () => {
       {
         date: date,
         id: maxId,
-        followUps: "Follow-ups",
-        nextTime: "Next time",
-        newBusiness: "New business"
+        followUps: '',
+        nextTime: '',
+        newBusiness: ''
       },
       ...sessions
     ]);

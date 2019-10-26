@@ -1,0 +1,15 @@
+.OneOnOneNotes {
+  padding: 3px;
+}
+
+.NoteAreaEdit {
+  width: 200px;
+  height: 100px;
+}
+
+.NoteAreaShow {
+  width: 200px;
+  height: 100px;
+  font-size: x-small;
+  padding: 3px;
+}

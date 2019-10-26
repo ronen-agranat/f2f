@@ -7,3 +7,7 @@
   overflow-y: scroll;
   height: 100%;
 }
+
+.DateHeader {
+    margin-bottom: 3px;
+}
