@@ -1,9 +1,9 @@
 .OneOnOneBrowser {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
 
-    padding: 10px;
-    overflow-y: scroll;
-    height: 100%;
+  padding: 10px;
+  overflow-y: scroll;
+  height: 100%;
 }

@@ -1,5 +1,5 @@
-import React from 'react';
-import styles from './PersonHeader.module.css';
+import React from "react";
+import styles from "./PersonHeader.module.css";
 
 const PersonHeader = () => {
   return (
@@ -8,7 +8,7 @@ const PersonHeader = () => {
       <div>Biscuit McDoogle</div>
       <div>Role</div>
     </div>
-  )
-}
+  );
+};
 
 export default PersonHeader;

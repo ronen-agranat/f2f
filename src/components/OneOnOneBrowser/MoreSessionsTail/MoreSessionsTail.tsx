@@ -1,11 +1,9 @@
-import React from 'react';
+import React from "react";
 
 const MoreSessionTail = () => {
   return (
     <div>
-      <strong>
-        &#8942;
-      </strong>
+      <strong>&#8942;</strong>
     </div>
   );
 };
