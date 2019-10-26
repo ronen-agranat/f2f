@@ -28,20 +28,29 @@ const OneOnOneMinutes = (props: IOneOnOneMinutesProps) => {
   return (
     <div className={styles.OneOnOneMinutes}>
       <div>{props.date}</div>
-      <OneOnOneNotes
-        followUps={props.followUps}
-        followUpsChanged={(event: ChangeEvent<HTMLTextAreaElement>) => {
-          props.followUpsChanged(props.id, event);
-        }}
-        newBusiness={props.newBusiness}
-        newBusinessChanged={(event: ChangeEvent<HTMLTextAreaElement>) => {
-          props.newBusinessChanged(props.id, event);
-        }}
-        nextTime={props.nextTime}
-        nextTimeChanged={(event: ChangeEvent<HTMLTextAreaElement>) => {
-          props.nextTimeChanged(props.id, event);
-        }}
-      />
+      <div className={styles.Notepad}>
+        <OneOnOneNotes
+          title="Follow-ups"
+          notes={props.followUps}
+          notesChanged={(event: ChangeEvent<HTMLTextAreaElement>) => {
+            props.followUpsChanged(props.id, event);
+          }}
+        />
+        <OneOnOneNotes
+          title="New Business"
+          notes={props.newBusiness}
+          notesChanged={(event: ChangeEvent<HTMLTextAreaElement>) => {
+            props.newBusinessChanged(props.id, event);
+          }}
+        />
+        <OneOnOneNotes
+          title="Next time"
+          notes={props.nextTime}
+          notesChanged={(event: ChangeEvent<HTMLTextAreaElement>) => {
+            props.nextTimeChanged(props.id, event);
+          }}
+        />
+      </div>
     </div>
   );
 };
