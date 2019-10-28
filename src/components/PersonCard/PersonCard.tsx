@@ -7,7 +7,7 @@ import styles from "./PersonCard.module.css";
 const PersonCard = () => {
   return (
     <div className={styles.PersonCard}>
-      <PersonHeader />
+      <PersonHeader name="Tamzon Agranat" role="Fraud Analyst"/>
       <OneOnOneBrowser />
     </div>
   );

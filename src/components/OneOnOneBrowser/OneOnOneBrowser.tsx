@@ -25,9 +25,14 @@ const OneOnOneBrowser = () => {
     {
       id: 2,
       date: "18 October 2019",
-      followUps: "Follow-ups go here",
-      newBusiness: "New business goes here",
-      nextTime: "Next time goes here"
+      followUps: "" +
+        "- Be a cutie pie\n" +
+        "- Be a tiny sheen\n" +
+        "- Be a sweetie pie",
+      newBusiness: "Sheen returned from Seattle",
+      nextTime: "" +
+        "- Receive one wholest kiss\n" +
+        "- Receive two kisses"
     },
     {
       id: 1,
@@ -95,11 +100,17 @@ const OneOnOneBrowser = () => {
       return;
     }
 
+    // Follow-ups are the 'next time' of the previous session
+    let followUps = '';
+    if (sessions.length) {
+      followUps = sessions[0].nextTime;
+    }
+
     setSessions([
       {
         date: date,
         id: maxId,
-        followUps: '',
+        followUps: followUps,
         nextTime: '',
         newBusiness: ''
       },

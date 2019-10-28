@@ -26,8 +26,11 @@ const OneOnOneNotes = (props: IOneOnOneProps) => {
   );
 
   return (
-    <div className={styles.OneOnOneNotes}>
-      {noteArea}
+    <div>
+      <p>{props.title}</p>
+      <div className={styles.OneOnOneNotes}>
+        {noteArea}
+      </div>
     </div>
   );
 };

@@ -1,12 +1,17 @@
 import React from "react";
 import styles from "./PersonHeader.module.css";
 
-const PersonHeader = () => {
+interface IPersonHeaderProps {
+  name: string;
+  role: string;
+}
+
+const PersonHeader = (props: IPersonHeaderProps) => {
   return (
     <div className={styles.PersonHeader}>
       <div>ProfilePic</div>
-      <div>Biscuit McDoogle</div>
-      <div>Role</div>
+      <div>{props.name}</div>
+      <div>{props.role}</div>
     </div>
   );
 };
