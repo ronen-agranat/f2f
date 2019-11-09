@@ -6,14 +6,7 @@ import MoreSessionTail from "./MoreSessionsTail/MoreSessionsTail";
 import { format } from "date-fns";
 
 import styles from "./OneOnOneBrowser.module.css";
-
-interface ISession {
-  id: number;
-  date: string;
-  followUps: string;
-  nextTime: string;
-  newBusiness: string;
-}
+import ISession from "../../types/ISession";
 
 const OneOnOneBrowser = () => {
   // TODO: Just for prototype to know what id new sessions should have; this would be handled by the data-store in
