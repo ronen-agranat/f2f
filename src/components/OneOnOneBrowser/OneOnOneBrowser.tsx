@@ -35,49 +35,80 @@ const OneOnOneBrowser = (props: IOneOnOneBrowserProps) => {
     }
   }, [sessionsLoaded, props.personId]);
 
+
+  const updateMinutes = (minutesId: number, session: ISession | undefined): void => {
+    if (!session) {
+      return;
+    }
+    // TODO: set some kind of dirty flag
+    // TODO: batch up changes
+    // TODO: serialise so that create requests complete before updates
+    FaceToFace.put(
+      `/people/${props.personId}/minutes/${minutesId}`,
+      session
+    )
+      .then((response: AxiosResponse) => {
+        // TODO update some kind of dirty flag / 'saved' indicator
+      })
+      .catch((error: AxiosError) => {
+        console.error("Something went wrong with updating the minutes", error);
+      });
+  };
+
+  // TODO: Generalise these 'changed' methods
   const followUpsChanged = (
     id: number,
     event: ChangeEvent<HTMLTextAreaElement>
   ) => {
+    let newSession: ISession | undefined;
     const newSessions = sessions.map(s => {
       if (s.id === id) {
-        return { ...s, followUps: event.target.value };
+        newSession = {...s, followUps: event.target.value}
+        return newSession;
       } else {
         return s;
       }
     });
 
     setSessions(newSessions);
+    updateMinutes(id, newSession);
   };
 
   const newBusinessChanged = (
     id: number,
     event: ChangeEvent<HTMLTextAreaElement>
   ) => {
+    let newSession: ISession | undefined;
     const newSessions = sessions.map(s => {
       if (s.id === id) {
-        return { ...s, newBusiness: event.target.value };
+        // FIXME: side effect in map
+        newSession = {...s, newBusiness: event.target.value}
+        return newSession;
       } else {
         return s;
       }
     });
 
     setSessions(newSessions);
+    updateMinutes(id, newSession);
   };
 
   const nextTimeChanged = (
     id: number,
     event: ChangeEvent<HTMLTextAreaElement>
   ) => {
+    let newSession: ISession | undefined;
     const newSessions = sessions.map(s => {
       if (s.id === id) {
-        return { ...s, nextTime: event.target.value };
+        newSession = {...s, nextTime: event.target.value};
+        return newSession;
       } else {
         return s;
       }
     });
 
     setSessions(newSessions);
+    updateMinutes(id, newSession);
   };
 
   const sessionAdded = React.useCallback(() => {
