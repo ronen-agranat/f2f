@@ -16,13 +16,7 @@ interface IOneOnOneBrowserProps {
 }
 
 const OneOnOneBrowser = (props: IOneOnOneBrowserProps) => {
-  // TODO: Just for prototype to know what id new sessions should have; this would be handled by the data-store in
-  // future
-  const [maxId, setMaxId] = useState<number>(3);
-
   const [sessionsLoaded, setSessionsLoaded] = useState(false);
-
-  // TODO: In the future, the list of sessions would come from the back-end
   const [sessions, setSessions] = useState<Array<ISession>>([]);
 
   // Whether all sessions should be shown or just the current session
@@ -101,18 +95,20 @@ const OneOnOneBrowser = (props: IOneOnOneBrowserProps) => {
       followUps = sessions[0].nextTime;
     }
 
-    setSessions([
-      {
-        date: date,
-        id: maxId,
-        followUps: followUps,
-        nextTime: "",
-        newBusiness: ""
-      },
-      ...sessions
-    ]);
-    setMaxId(maxId + 1);
-  }, [sessions, maxId]);
+    FaceToFace.post(`/people/${props.personId}/minutes`, {
+      date: date,
+      followUps: followUps,
+      nextTime: "",
+      newBusiness: ""
+    })
+      .then((response: AxiosResponse<ISession>) => {
+        setSessions([response.data, ...sessions]);
+        console.log(response);
+      })
+      .catch((error: AxiosError) => {
+        console.error("Something went wrong posting new minutes", error);
+      });
+  }, [sessions, props.personId]);
 
   const toggleShowMoreSessions = () => {
     setShowAllSessions(!showAllSessions);
