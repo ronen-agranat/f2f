@@ -1,4 +1,5 @@
-import React, {ChangeEvent, useState} from "react";
+import React, {ChangeEvent, useEffect, useState} from "react";
+import PropTypes from "prop-types";
 import OneOnOneMinutes from "../OneOnOneMinutes/OneOnOneMinutes";
 import AddSessionButton from "./AddSessionButton/AddSessionButton";
 import MoreSessionTail from "./MoreSessionsTail/MoreSessionsTail";
@@ -7,37 +8,38 @@ import { format } from "date-fns";
 
 import styles from "./OneOnOneBrowser.module.css";
 import ISession from "../../types/ISession";
+import FaceToFace from "../../services/FaceToFace";
+import {AxiosError, AxiosResponse} from "axios";
 
-const OneOnOneBrowser = () => {
+interface IOneOnOneBrowserProps {
+  personId: number;
+}
+
+const OneOnOneBrowser = (props: IOneOnOneBrowserProps) => {
   // TODO: Just for prototype to know what id new sessions should have; this would be handled by the data-store in
   // future
   const [maxId, setMaxId] = useState<number>(3);
 
+  const [sessionsLoaded, setSessionsLoaded] = useState(false);
+
   // TODO: In the future, the list of sessions would come from the back-end
-  const [sessions, setSessions] = useState<Array<ISession>>([
-    {
-      id: 2,
-      date: "18 October 2019",
-      followUps: "" +
-        "- Be a cutie pie\n" +
-        "- Be a tiny sheen\n" +
-        "- Be a sweetie pie",
-      newBusiness: "Sheen returned from Seattle",
-      nextTime: "" +
-        "- Receive one wholest kiss\n" +
-        "- Receive two kisses"
-    },
-    {
-      id: 1,
-      date: "11 October 2019",
-      followUps: "Follow-ups go here",
-      newBusiness: "New business goes here",
-      nextTime: "Next time goes here"
-    }
-  ]);
+  const [sessions, setSessions] = useState<Array<ISession>>([]);
 
   // Whether all sessions should be shown or just the current session
   const [showAllSessions, setShowAllSessions] = useState(false);
+
+  useEffect(() => {
+    if (!sessionsLoaded) {
+      FaceToFace.get(`/people/${props.personId}/minutes`)
+        .then((response: AxiosResponse<Array<ISession>>) => {
+          setSessions(response.data);
+          setSessionsLoaded(true);
+        })
+        .catch((error: AxiosError) => {
+          console.error("Something went wrong retrieving minutes", error);
+        });
+    }
+  }, [sessionsLoaded, props.personId]);
 
   const followUpsChanged = (
     id: number,
@@ -94,7 +96,7 @@ const OneOnOneBrowser = () => {
     }
 
     // Follow-ups are the 'next time' of the previous session
-    let followUps = '';
+    let followUps = "";
     if (sessions.length) {
       followUps = sessions[0].nextTime;
     }
@@ -104,8 +106,8 @@ const OneOnOneBrowser = () => {
         date: date,
         id: maxId,
         followUps: followUps,
-        nextTime: '',
-        newBusiness: ''
+        nextTime: "",
+        newBusiness: ""
       },
       ...sessions
     ]);
@@ -139,9 +141,16 @@ const OneOnOneBrowser = () => {
     <div className={styles.OneOnOneBrowser}>
       <AddSessionButton onSessionAdded={sessionAdded} />
       {oneOnOneMinutes}
-      <MoreSessionTail clicked={toggleShowMoreSessions} activated={showAllSessions}/>
+      <MoreSessionTail
+        clicked={toggleShowMoreSessions}
+        activated={showAllSessions}
+      />
     </div>
   );
+};
+
+OneOnOneBrowser.propTypes = {
+  personId: PropTypes.number.isRequired
 };
 
 export default OneOnOneBrowser;

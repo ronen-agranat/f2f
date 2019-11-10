@@ -8,7 +8,6 @@ import {AxiosError, AxiosResponse} from "axios";
 
 interface IPersonState {
   id: number;
-  loaded: boolean;
   role: string;
   name: string;
 }
@@ -18,25 +17,27 @@ const PersonCard = () => {
     id: 1,
     name: '',
     role: '',
-    loaded: false
   });
 
+  const [personLoaded, setPersonLoaded] = useState(false);
+
   useEffect(() => {
-    if (!personState.loaded) {
+    if (!personLoaded) {
       FaceToFace.get(`/people/${personState.id}`)
         .then((response: AxiosResponse<IPersonState>) => {
           setPersonState(response.data);
+          setPersonLoaded(true);
         })
         .catch((error: AxiosError) => {
           console.error('Something went wrong with fetching data', error);
         })
     }
-  }, [personState.loaded, personState.id]);
+  }, [personLoaded, personState.id]);
 
   return (
     <div className={styles.PersonCard}>
       <PersonHeader name={personState.name} role={personState.role}/>
-      <OneOnOneBrowser />
+      <OneOnOneBrowser personId={personState.id}/>
     </div>
   );
 };
