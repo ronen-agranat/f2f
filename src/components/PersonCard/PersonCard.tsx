@@ -7,16 +7,18 @@ import { Person } from '../../interfaces/person.interface';
 import styles from './PersonCard.module.css';
 import { AxiosError, AxiosResponse } from 'axios';
 
-export default function() {
-  const [person, setPersonState] = useState<Person>({
-    id: 1,
-  });
+interface IPersonCardProps {
+  personId: number;
+}
+
+const PersonCard = (props: IPersonCardProps) => {
+  const [person, setPersonState] = useState<Person | undefined>();
 
   const [personLoaded, setPersonLoaded] = useState(false);
 
   useEffect(() => {
     if (!personLoaded) {
-      FaceToFace.get(`/people/${person.id}`)
+      FaceToFace.get(`/people/${props.personId}`)
         .then((response: AxiosResponse<Person>) => {
           setPersonState(response.data);
           setPersonLoaded(true);
@@ -25,12 +27,25 @@ export default function() {
           console.error('Something went wrong with fetching data', error);
         });
     }
-  }, [personLoaded, person.id]);
+  }, [personLoaded, props.personId]);
+
+  let personContent = null;
+
+  if (person) {
+    personContent = (
+      <>
+        <PersonHeader name={person.name} role={person.role} imageUrl={person.imageUrl}/>
+        <OneOnOneBrowser personId={person.id}/>
+      </>
+    );
+  }
+  ;
 
   return (
     <div className={styles.PersonCard}>
-      <PersonHeader name={person.name} role={person.role} imageUrl={person.imageUrl}/>
-      <OneOnOneBrowser personId={person.id}/>
+      {personContent}
     </div>
   );
 }
+
+export default PersonCard;

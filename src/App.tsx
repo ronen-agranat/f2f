@@ -1,8 +1,8 @@
 import React from "react";
-import PersonCard from "./components/PersonCard/PersonCard";
+import PersonsBrowser from './components/PersonsBrowser/PersonsBrowser';
 
 function App() {
-  return <PersonCard />;
+  return <PersonsBrowser/>;
 }
 
 export default App;
