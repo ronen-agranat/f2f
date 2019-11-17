@@ -1,5 +1,4 @@
 import React, { useEffect, useState } from 'react';
-import PersonCard from '../PersonCard/PersonCard';
 
 import styles from './PersonsBrowser.module.css';
 import FaceToFace from '../../services/FaceToFace';
