@@ -18,7 +18,7 @@ const PersonCard = (props: IPersonCardProps) => {
 
   useEffect(() => {
     if (!personLoaded) {
-      FaceToFace.get(`/people/${props.personId}`)
+      FaceToFace.get(`/persons/${props.personId}`)
         .then((response: AxiosResponse<Person>) => {
           setPersonState(response.data);
           setPersonLoaded(true);
