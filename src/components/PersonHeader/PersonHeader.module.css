@@ -10,5 +10,13 @@
   font-size: large;
   border-bottom: 1px solid black;
 
-  height: 50px;
+    height: 65px;
+}
+
+.PersonHeader img {
+    width: 60px;
+    height: 60px;
+    vertical-align: middle;
+    border-radius: 50%;
+    border: solid white 2px;
 }
