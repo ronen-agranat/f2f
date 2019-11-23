@@ -29,11 +29,13 @@ const PersonsBrowser = () => {
       role={person.role}
       name={person.name}
       key={person.id}
+      id={person.id}
     />
   ));
 
   return (
     <div className={styles.PersonsBrowser}>
+      <button>+ Add person</button>
       {personCards}
     </div>
   );

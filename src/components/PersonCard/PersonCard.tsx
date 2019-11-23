@@ -7,18 +7,27 @@ import { Person } from '../../interfaces/person.interface';
 import styles from './PersonCard.module.css';
 import { AxiosError, AxiosResponse } from 'axios';
 
+import { useParams } from 'react-router-dom';
+
 interface IPersonCardProps {
   personId: number;
 }
 
+interface IPersonParams {
+  id?: string | undefined;
+}
+
 const PersonCard = (props: IPersonCardProps) => {
+  const params = useParams<IPersonParams>();
+  const personId = params.id ? Number(params.id) : props.personId;
+
   const [person, setPersonState] = useState<Person | undefined>();
 
   const [personLoaded, setPersonLoaded] = useState(false);
 
   useEffect(() => {
     if (!personLoaded) {
-      FaceToFace.get(`/persons/${props.personId}`)
+      FaceToFace.get(`/persons/${personId}`)
         .then((response: AxiosResponse<Person>) => {
           setPersonState(response.data);
           setPersonLoaded(true);
@@ -27,25 +36,24 @@ const PersonCard = (props: IPersonCardProps) => {
           console.error('Something went wrong with fetching data', error);
         });
     }
-  }, [personLoaded, props.personId]);
+  }, [personLoaded, personId]);
 
   let personContent = null;
 
   if (person) {
     personContent = (
       <>
-        <PersonHeader name={person.name} role={person.role} imageUrl={person.imageUrl}/>
-        <OneOnOneBrowser personId={person.id}/>
+        <PersonHeader
+          name={person.name}
+          role={person.role}
+          imageUrl={person.imageUrl}
+          id={personId}
+        />
+        <OneOnOneBrowser personId={person.id || personId}/>
       </>
     );
   }
-  ;
-
-  return (
-    <div className={styles.PersonCard}>
-      {personContent}
-    </div>
-  );
-}
+  return <div className={styles.PersonCard}>{personContent}</div>;
+};
 
 export default PersonCard;
