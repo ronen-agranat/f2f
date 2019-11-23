@@ -5,6 +5,7 @@ import FaceToFace from '../../services/FaceToFace';
 import { AxiosError, AxiosResponse } from 'axios';
 import { Person } from '../../interfaces/person.interface';
 import PersonHeader from '../PersonHeader/PersonHeader';
+import { Link } from 'react-router-dom';
 
 const PersonsBrowser = () => {
   const [personsLoaded, setPersonsLoaded] = useState(false);
@@ -35,7 +36,7 @@ const PersonsBrowser = () => {
 
   return (
     <div className={styles.PersonsBrowser}>
-      <button>+ Add person</button>
+      <Link to="persons/create">+ Add person</Link>
       {personCards}
     </div>
   );

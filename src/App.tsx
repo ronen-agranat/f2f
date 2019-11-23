@@ -7,6 +7,7 @@ import {
   Route,
   Link,
 } from 'react-router-dom';
+import NewPersonForm from './components/Persons/NewPersonForm/NewPersonForm';
 
 function App() {
   return (
@@ -23,6 +24,7 @@ function App() {
       <Switch>
         <Route path='/' exact component={PersonsBrowser}/>
         <Route path='/persons/' exact component={PersonsBrowser}/>
+        <Route path='/persons/create' exact component={NewPersonForm}/>
         <Route path='/persons/:id' exact component={PersonCard}/>
       </Switch>
     </Router>
