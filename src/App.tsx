@@ -1,6 +1,6 @@
 import React from "react";
 import PersonsBrowser from './components/PersonsBrowser/PersonsBrowser';
-import PersonCard from './components/PersonCard/PersonCard';
+import PersonCard from './components/Persons/PersonCard/PersonCard';
 import {
   BrowserRouter as Router,
   Switch,

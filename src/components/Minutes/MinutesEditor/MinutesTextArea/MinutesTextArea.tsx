@@ -1,7 +1,7 @@
-import React, { ChangeEvent } from "react";
-import PropTypes from "prop-types";
+import React, { ChangeEvent } from 'react';
+import PropTypes from 'prop-types';
 
-import styles from "./OneOnOneNotes.module.css";
+import styles from './MinutesTextArea.module.css';
 
 interface IOneOnOneProps {
   notesChanged: (event: ChangeEvent<HTMLTextAreaElement>) => void;
@@ -11,16 +11,16 @@ interface IOneOnOneProps {
   focused: () => void;
 }
 
-const OneOnOneNotes = (props: IOneOnOneProps) => {
+const MinutesTextArea = (props: IOneOnOneProps) => {
   const noteArea = props.active ? (
     <textarea
-      className={styles.NoteAreaEdit}
+      className={styles.TextAreaEdit}
       onChange={props.notesChanged}
       value={props.notes}
       placeholder={props.title}
     />
   ) : (
-    <div className={styles.NoteAreaShow} onClick={props.focused}>
+    <div className={styles.TextAreaShow} onClick={props.focused}>
       {Boolean(props.notes.length) ? props.notes : props.title}
     </div>
   );
@@ -28,19 +28,17 @@ const OneOnOneNotes = (props: IOneOnOneProps) => {
   return (
     <div>
       <p>{props.title}</p>
-      <div className={styles.OneOnOneNotes}>
-        {noteArea}
-      </div>
+      <div className={styles.MinutesTextArea}>{noteArea}</div>
     </div>
   );
 };
 
-OneOnOneNotes.propTypes = {
+MinutesTextArea.propTypes = {
   notesChanged: PropTypes.func.isRequired,
   notes: PropTypes.string.isRequired,
   title: PropTypes.string.isRequired,
   active: PropTypes.bool.isRequired,
-  focused: PropTypes.func.isRequired
+  focused: PropTypes.func.isRequired,
 };
 
-export default OneOnOneNotes;
+export default MinutesTextArea;

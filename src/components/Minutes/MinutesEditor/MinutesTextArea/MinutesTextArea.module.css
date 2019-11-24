@@ -1,0 +1,20 @@
+.MinutesTextArea {
+  padding: 3px;
+}
+
+.TextArea {
+}
+
+.TextAreaEdit {
+  width: 100%;
+  height: 130px;
+    overflow-y: scroll;
+}
+
+.TextAreaShow {
+  width: 100%;
+    min-height: 130px;
+  font-size: small;
+  padding: 3px;
+  white-space: pre;
+}

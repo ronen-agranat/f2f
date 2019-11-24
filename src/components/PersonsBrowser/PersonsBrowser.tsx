@@ -4,7 +4,7 @@ import styles from './PersonsBrowser.module.css';
 import FaceToFace from '../../services/FaceToFace';
 import { AxiosError, AxiosResponse } from 'axios';
 import { Person } from '../../interfaces/person.interface';
-import PersonHeader from '../PersonHeader/PersonHeader';
+import PersonHeader from '../Persons/PersonHeader/PersonHeader';
 import { Link } from 'react-router-dom';
 
 const PersonsBrowser = () => {

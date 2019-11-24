@@ -1,8 +1,8 @@
 import React, { useEffect, useState } from 'react';
 import PersonHeader from '../PersonHeader/PersonHeader';
-import OneOnOneBrowser from '../OneOnOneBrowser/OneOnOneBrowser';
-import FaceToFace from '../../services/FaceToFace';
-import { Person } from '../../interfaces/person.interface';
+import MinutesBrowser from '../../Minutes/MinutesBrowser/MinutesBrowser';
+import FaceToFace from '../../../services/FaceToFace';
+import { Person } from '../../../interfaces/person.interface';
 
 import styles from './PersonCard.module.css';
 import { AxiosError, AxiosResponse } from 'axios';
@@ -49,7 +49,7 @@ const PersonCard = (props: IPersonCardProps) => {
           imageUrl={person.imageUrl}
           id={personId}
         />
-        <OneOnOneBrowser personId={person.id || personId}/>
+        <MinutesBrowser personId={person.id || personId}/>
       </>
     );
   }

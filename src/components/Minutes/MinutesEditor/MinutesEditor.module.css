@@ -1,0 +1,21 @@
+.MinutesEditor {
+  margin-bottom: 15px;
+}
+
+.TextEditor {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+}
+
+.TextEditor__textarea {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+}
+
+.TextEditor p {
+  font-size: small;
+  font-weight: bold;
+  padding: 0;
+}
