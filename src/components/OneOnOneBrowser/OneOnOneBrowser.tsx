@@ -54,15 +54,15 @@ const OneOnOneBrowser = (props: IOneOnOneBrowserProps) => {
       });
   };
 
-  // TODO: Generalise these 'changed' methods
-  const followUpsChanged = (
-    id: number,
+  const notesChanged = (
+    minutesId: number,
     event: ChangeEvent<HTMLTextAreaElement>,
+    notesName: string,
   ) => {
     let newSession: MinutesInterface | undefined;
     const newSessions = sessions.map(s => {
-      if (s.id === id) {
-        newSession = { ...s, followUps: event.target.value };
+      if (s.id === minutesId) {
+        newSession = { ...s, [notesName]: event.target.value };
         return newSession;
       } else {
         return s;
@@ -70,44 +70,30 @@ const OneOnOneBrowser = (props: IOneOnOneBrowserProps) => {
     });
 
     setSessions(newSessions);
-    updateMinutes(id, newSession);
+    if (newSession) {
+      updateMinutes(minutesId, newSession);
+    }
+  };
+
+  const followUpsChanged = (
+    id: number,
+    event: ChangeEvent<HTMLTextAreaElement>,
+  ) => {
+    notesChanged(id, event, 'followUps');
   };
 
   const newBusinessChanged = (
     id: number,
     event: ChangeEvent<HTMLTextAreaElement>,
   ) => {
-    let newSession: MinutesInterface | undefined;
-    const newSessions = sessions.map(s => {
-      if (s.id === id) {
-        // FIXME: side effect in map
-        newSession = { ...s, newBusiness: event.target.value };
-        return newSession;
-      } else {
-        return s;
-      }
-    });
-
-    setSessions(newSessions);
-    updateMinutes(id, newSession);
-  };
+    notesChanged(id, event, 'newBusiness');
+  }
 
   const nextTimeChanged = (
     id: number,
     event: ChangeEvent<HTMLTextAreaElement>,
   ) => {
-    let newSession: MinutesInterface | undefined;
-    const newSessions = sessions.map(s => {
-      if (s.id === id) {
-        newSession = { ...s, nextTime: event.target.value };
-        return newSession;
-      } else {
-        return s;
-      }
-    });
-
-    setSessions(newSessions);
-    updateMinutes(id, newSession);
+    notesChanged(id, event, 'nextTime');
   };
 
   const sessionAdded = React.useCallback(() => {
