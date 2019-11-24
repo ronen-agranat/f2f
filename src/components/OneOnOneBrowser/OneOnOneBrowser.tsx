@@ -1,15 +1,15 @@
-import React, {ChangeEvent, useEffect, useState} from "react";
-import PropTypes from "prop-types";
-import OneOnOneMinutes from "../OneOnOneMinutes/OneOnOneMinutes";
-import AddSessionButton from "./AddSessionButton/AddSessionButton";
-import MoreSessionTail from "./MoreSessionsTail/MoreSessionsTail";
+import React, { ChangeEvent, useEffect, useState } from 'react';
+import PropTypes from 'prop-types';
+import OneOnOneMinutes from '../OneOnOneMinutes/OneOnOneMinutes';
+import AddSessionButton from './AddSessionButton/AddSessionButton';
+import MoreSessionTail from './MoreSessionsTail/MoreSessionsTail';
 
-import { format } from "date-fns";
+import { format } from 'date-fns';
 
-import styles from "./OneOnOneBrowser.module.css";
-import ISession from "../../types/ISession";
-import FaceToFace from "../../services/FaceToFace";
-import {AxiosError, AxiosResponse} from "axios";
+import styles from './OneOnOneBrowser.module.css';
+import { MinutesInterface } from '../../interfaces/minutes.interface';
+import FaceToFace from '../../services/FaceToFace';
+import { AxiosError, AxiosResponse } from 'axios';
 
 interface IOneOnOneBrowserProps {
   personId: number;
@@ -17,53 +17,52 @@ interface IOneOnOneBrowserProps {
 
 const OneOnOneBrowser = (props: IOneOnOneBrowserProps) => {
   const [sessionsLoaded, setSessionsLoaded] = useState(false);
-  const [sessions, setSessions] = useState<Array<ISession>>([]);
+  const [sessions, setSessions] = useState<Array<MinutesInterface>>([]);
 
   // Whether all sessions should be shown or just the current session
   const [showAllSessions, setShowAllSessions] = useState(false);
 
   useEffect(() => {
     if (!sessionsLoaded) {
-      FaceToFace.get(`/people/${props.personId}/minutes`)
-        .then((response: AxiosResponse<Array<ISession>>) => {
+      FaceToFace.get(`/persons/${props.personId}/minutes`)
+        .then((response: AxiosResponse<Array<MinutesInterface>>) => {
           setSessions(response.data);
           setSessionsLoaded(true);
         })
         .catch((error: AxiosError) => {
-          console.error("Something went wrong retrieving minutes", error);
+          console.error('Something went wrong retrieving minutes', error);
         });
     }
   }, [sessionsLoaded, props.personId]);
 
-
-  const updateMinutes = (minutesId: number, session: ISession | undefined): void => {
+  const updateMinutes = (
+    minutesId: number,
+    session: MinutesInterface | undefined,
+  ): void => {
     if (!session) {
       return;
     }
     // TODO: set some kind of dirty flag
     // TODO: batch up changes
     // TODO: serialise so that create requests complete before updates
-    FaceToFace.put(
-      `/people/${props.personId}/minutes/${minutesId}`,
-      session
-    )
+    FaceToFace.put(`/persons/${props.personId}/minutes/${minutesId}`, session)
       .then((response: AxiosResponse) => {
         // TODO update some kind of dirty flag / 'saved' indicator
       })
       .catch((error: AxiosError) => {
-        console.error("Something went wrong with updating the minutes", error);
+        console.error('Something went wrong with updating the minutes', error);
       });
   };
 
   // TODO: Generalise these 'changed' methods
   const followUpsChanged = (
     id: number,
-    event: ChangeEvent<HTMLTextAreaElement>
+    event: ChangeEvent<HTMLTextAreaElement>,
   ) => {
-    let newSession: ISession | undefined;
+    let newSession: MinutesInterface | undefined;
     const newSessions = sessions.map(s => {
       if (s.id === id) {
-        newSession = {...s, followUps: event.target.value}
+        newSession = { ...s, followUps: event.target.value };
         return newSession;
       } else {
         return s;
@@ -76,13 +75,13 @@ const OneOnOneBrowser = (props: IOneOnOneBrowserProps) => {
 
   const newBusinessChanged = (
     id: number,
-    event: ChangeEvent<HTMLTextAreaElement>
+    event: ChangeEvent<HTMLTextAreaElement>,
   ) => {
-    let newSession: ISession | undefined;
+    let newSession: MinutesInterface | undefined;
     const newSessions = sessions.map(s => {
       if (s.id === id) {
         // FIXME: side effect in map
-        newSession = {...s, newBusiness: event.target.value}
+        newSession = { ...s, newBusiness: event.target.value };
         return newSession;
       } else {
         return s;
@@ -95,12 +94,12 @@ const OneOnOneBrowser = (props: IOneOnOneBrowserProps) => {
 
   const nextTimeChanged = (
     id: number,
-    event: ChangeEvent<HTMLTextAreaElement>
+    event: ChangeEvent<HTMLTextAreaElement>,
   ) => {
-    let newSession: ISession | undefined;
+    let newSession: MinutesInterface | undefined;
     const newSessions = sessions.map(s => {
       if (s.id === id) {
-        newSession = {...s, nextTime: event.target.value};
+        newSession = { ...s, nextTime: event.target.value };
         return newSession;
       } else {
         return s;
@@ -112,32 +111,32 @@ const OneOnOneBrowser = (props: IOneOnOneBrowserProps) => {
   };
 
   const sessionAdded = React.useCallback(() => {
-    const date = format(new Date(), "dd LLLL yyyy");
+    const date = format(new Date(), 'dd LLLL yyyy');
 
     // Don't add a session if there already is one for today
     if (sessions.find(s => s.date === date)) {
-      alert("There already is a session for today");
+      alert('There already is a session for today');
       return;
     }
 
     // Follow-ups are the 'next time' of the previous session
-    let followUps = "";
+    let followUps = '';
     if (sessions.length) {
       followUps = sessions[0].nextTime;
     }
 
-    FaceToFace.post(`/people/${props.personId}/minutes`, {
+    FaceToFace.post(`/persons/${props.personId}/minutes`, {
       date: date,
       followUps: followUps,
-      nextTime: "",
-      newBusiness: ""
+      nextTime: '',
+      newBusiness: '',
     })
-      .then((response: AxiosResponse<ISession>) => {
+      .then((response: AxiosResponse<MinutesInterface>) => {
         setSessions([response.data, ...sessions]);
         console.log(response);
       })
       .catch((error: AxiosError) => {
-        console.error("Something went wrong posting new minutes", error);
+        console.error('Something went wrong posting new minutes', error);
       });
   }, [sessions, props.personId]);
 
@@ -177,7 +176,7 @@ const OneOnOneBrowser = (props: IOneOnOneBrowserProps) => {
 };
 
 OneOnOneBrowser.propTypes = {
-  personId: PropTypes.number.isRequired
+  personId: PropTypes.number.isRequired,
 };
 
 export default OneOnOneBrowser;
