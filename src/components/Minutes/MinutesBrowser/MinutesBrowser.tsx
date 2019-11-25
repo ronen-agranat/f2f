@@ -104,17 +104,20 @@ const MinutesBrowser = (props: IOneOnOneBrowserProps) => {
   };
 
   // TODO: Don't compute this whole thing if showing only first element
-  let oneOnOneMinutes = sessions.map(s => (
-    <MinutesEditor
+  let oneOnOneMinutes = sessions.map(s => {
+    const valuesMap = new Map<string, string>();
+    valuesMap.set('followUps', s.followUps);
+    valuesMap.set('newBusiness', s.newBusiness);
+    valuesMap.set('nextTime', s.nextTime);
+
+    return <MinutesEditor
       id={s.id}
       key={s.id}
       date={s.date}
-      followUps={s.followUps}
+      values={valuesMap}
       notesChanged={notesChanged}
-      nextTime={s.nextTime}
-      newBusiness={s.newBusiness}
     />
-  ));
+  });
 
   if (!showAllSessions) {
     oneOnOneMinutes = [oneOnOneMinutes[0]];

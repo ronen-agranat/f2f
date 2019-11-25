@@ -14,9 +14,7 @@ interface IOneOnOneMinutesProps {
     event: ChangeEvent<HTMLTextAreaElement>,
     textAreaName: string,
   ) => void;
-  followUps: string;
-  newBusiness: string;
-  nextTime: string;
+  values: Map<string, string>;
 }
 
 // TODO: Show time since now so that you can easily say 'we met last week' or 'its been a while'
@@ -28,7 +26,7 @@ const MinutesEditor = (props: IOneOnOneMinutesProps) => {
   const textAreas = textAreasToRender.map((textArea) => {
     return <MinutesTextArea
       title={textArea.displayName}
-      notes={props.followUps}
+      notes={props.values.get(textArea.name) || ''}
       key={`textarea_${props.id}_${textArea.name}`}
       notesChanged={(event: ChangeEvent<HTMLTextAreaElement>) => {
         props.notesChanged(props.id, event, textArea.name);
@@ -54,9 +52,7 @@ MinutesEditor.propTypes = {
   date: PropTypes.string.isRequired,
   id: PropTypes.number.isRequired,
   notesChanged: PropTypes.func.isRequired,
-  followUps: PropTypes.string.isRequired,
-  newBusiness: PropTypes.string.isRequired,
-  nextTime: PropTypes.string.isRequired
+  values: PropTypes.object.isRequired,
 };
 
 export default MinutesEditor;
