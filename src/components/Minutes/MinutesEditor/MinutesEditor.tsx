@@ -1,10 +1,28 @@
-import React, {ChangeEvent, useState} from "react";
+import React, { ChangeEvent, createRef, RefObject, useEffect, useState } from 'react';
 import PropTypes from "prop-types";
 
 import MinutesTextArea from './MinutesTextArea/MinutesTextArea';
 import styles from './MinutesEditor.module.css';
 
-import { NOTE_AREAS } from './NoteAreas';
+class NoteArea {
+  constructor(name: string, displayName: string) {
+    this.name = name;
+    this.displayName = displayName;
+    this.ref = createRef<HTMLTextAreaElement>();
+  }
+
+  readonly name: string;
+  readonly displayName: string;
+  readonly ref: RefObject<HTMLTextAreaElement>;
+}
+
+const noteAreas = new Map<string, NoteArea>();
+const followUps = new NoteArea('followUps', 'Follow-ups');
+const nextTime = new NoteArea('nextTime', 'Next time');
+const newBusiness = new NoteArea('newBusiness', 'New business');
+noteAreas.set('followUps', followUps);
+noteAreas.set('nextTime', nextTime);
+noteAreas.set('newBusiness', newBusiness);
 
 interface IOneOnOneMinutesProps {
   date: string;
@@ -19,21 +37,29 @@ interface IOneOnOneMinutesProps {
 
 // TODO: Show time since now so that you can easily say 'we met last week' or 'its been a while'
 const MinutesEditor = (props: IOneOnOneMinutesProps) => {
-  const [currentNotes, setCurrentNotes] = useState("followUps");
+  const [currentNotes, setCurrentNotes] = useState<NoteArea>(followUps);
 
-  const textAreasToRender = [NOTE_AREAS.followUps, NOTE_AREAS.newBusiness, NOTE_AREAS.nextTime];
+  const textAreasToRender = [followUps, newBusiness, nextTime];
+
+  useEffect(() => {
+    const current = currentNotes.ref.current;
+    if (current) {
+      current.focus();
+    }
+  }, [currentNotes]);
 
   const textAreas = textAreasToRender.map((textArea) => {
     return <MinutesTextArea
+      ref={textArea.ref}
       title={textArea.displayName}
       notes={props.values.get(textArea.name) || ''}
       key={`textarea_${props.id}_${textArea.name}`}
       notesChanged={(event: ChangeEvent<HTMLTextAreaElement>) => {
         props.notesChanged(props.id, event, textArea.name);
       }}
-      active={currentNotes === textArea.name}
+      active={currentNotes === textArea}
       focused={() => {
-        setCurrentNotes(textArea.name);
+        setCurrentNotes(textArea);
       }}
     />;
   });

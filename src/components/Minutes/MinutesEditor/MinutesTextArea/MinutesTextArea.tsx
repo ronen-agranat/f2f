@@ -1,4 +1,4 @@
-import React, { ChangeEvent } from 'react';
+import React, { ChangeEvent, forwardRef, Ref } from 'react';
 import PropTypes from 'prop-types';
 
 import styles from './MinutesTextArea.module.css';
@@ -11,9 +11,10 @@ interface IOneOnOneProps {
   focused: () => void;
 }
 
-const MinutesTextArea = (props: IOneOnOneProps) => {
+const MinutesTextArea = forwardRef((props: IOneOnOneProps, ref: Ref<HTMLTextAreaElement>) => {
   const noteArea = props.active ? (
     <textarea
+      ref={ref}
       className={styles.TextAreaEdit}
       onChange={props.notesChanged}
       value={props.notes}
@@ -31,7 +32,7 @@ const MinutesTextArea = (props: IOneOnOneProps) => {
       <div className={styles.MinutesTextArea}>{noteArea}</div>
     </div>
   );
-};
+});
 
 MinutesTextArea.propTypes = {
   notesChanged: PropTypes.func.isRequired,
