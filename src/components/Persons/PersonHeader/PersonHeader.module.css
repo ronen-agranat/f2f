@@ -1,22 +1,19 @@
 .PersonHeader {
+  align-items: center;
+  border-bottom: 1px solid #ebebeb;
   display: flex;
   flex-direction: row;
-  justify-content: space-between;
-  align-items: center;
-
-  padding: 0 10px;
-
-  font-weight: bold;
   font-size: large;
-  border-bottom: 1px solid black;
-
-    height: 65px;
+  font-weight: bold;
+  height: 65px;
+  justify-content: space-between;
+  padding: 0 10px;
 }
 
 .PersonHeader img {
-    width: 60px;
-    height: 60px;
-    vertical-align: middle;
-    border-radius: 50%;
-    border: solid white 2px;
+  width: 60px;
+  height: 60px;
+  vertical-align: middle;
+  border-radius: 50%;
+  border: solid white 2px;
 }

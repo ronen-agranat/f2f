@@ -5,7 +5,7 @@ import FaceToFace from '../../services/FaceToFace';
 import { AxiosError, AxiosResponse } from 'axios';
 import { Person } from '../../interfaces/person.interface';
 import PersonHeader from '../Persons/PersonHeader/PersonHeader';
-import { Link } from 'react-router-dom';
+import { AddPersonButton } from './AddPersonButton/AddPersonButton';
 
 const PersonsBrowser = () => {
   const [personsLoaded, setPersonsLoaded] = useState(false);
@@ -45,10 +45,10 @@ const PersonsBrowser = () => {
   ));
 
   return (
-    <div className={styles.PersonsBrowser}>
-      <Link to="persons/create">+ Add person</Link>
-      {personCards}
-    </div>
+    <>
+      <div className={styles.PersonsBrowser}>{personCards}</div>
+      <AddPersonButton/>
+    </>
   );
 };
 

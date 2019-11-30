@@ -1,6 +1,7 @@
 .NavBar nav {
   display: flex;
-  justify-content: flex-end
+  justify-content: flex-end;
+  border-bottom: 1px solid #ebebeb;
 }
 
 .NavBar nav ul {
