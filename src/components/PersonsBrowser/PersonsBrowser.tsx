@@ -24,6 +24,14 @@ const PersonsBrowser = () => {
     }
   }, [personsLoaded]);
 
+  const personDeleted = (id: number) => {
+    // Update local persons state when person deleted
+    const newPersons = [...persons].filter((p: Person) => {
+      return p.id !== id;
+    });
+    setPersons(newPersons);
+  };
+
   const personCards = persons.map(person => (
     <PersonHeader
       imageUrl={person.imageUrl}
@@ -31,6 +39,8 @@ const PersonsBrowser = () => {
       name={person.name}
       key={person.id}
       id={person.id}
+      showDeletePerson={true}
+      personDeleted={personDeleted}
     />
   ));
 
