@@ -41,13 +41,17 @@ const PersonHeader = (props: IPersonHeaderProps) => {
 
   return (
     <div className={styles.PersonHeader}>
-      {Boolean(props.imageUrl) ? (
-        <img src={props.imageUrl} alt={imageAltText}/>
-      ) : null}
-      <Link to={`/persons/${props.id}`}>
-        {Boolean(props.name) ? <div>{props.name}</div> : null}
-      </Link>
-      {Boolean(props.role) ? <div>{props.role}</div> : null}
+      <div className={styles.title}>
+        {Boolean(props.imageUrl) ? (
+          <img src={props.imageUrl} alt={imageAltText}/>
+        ) : null}
+        <div className={styles.title__name}>
+          <Link to={`/persons/${props.id}`}>
+            {Boolean(props.name) ? <div>{props.name}</div> : null}
+          </Link>
+        </div>
+        {Boolean(props.role) ? <div>{props.role}</div> : null}
+      </div>
       {deletePersonButton}
     </div>
   );
