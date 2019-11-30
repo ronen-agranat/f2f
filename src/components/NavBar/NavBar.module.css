@@ -1,0 +1,21 @@
+.NavBar nav {
+  display: flex;
+  justify-content: flex-end
+}
+
+.NavBar nav ul {
+  padding: 5px;
+  margin: 5px;
+  list-style: none;
+}
+
+.NavBar nav ul li {
+  display: block;
+}
+
+.NavBar nav ul li a,
+.NavBar nav ul li a:active,
+.NavBar nav ul li a:hover,
+.NavBar nav ul li a:visited {
+  text-decoration: none;
+}
