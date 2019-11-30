@@ -9,10 +9,12 @@ import {
 } from 'react-router-dom';
 import NewPersonForm from './components/Persons/NewPersonForm/NewPersonForm';
 
+import styles from './App.module.css';
+
 function App() {
   return (
     <Router>
-      <div>
+      <div className={styles.App}>
         <nav>
           <ul>
             <li>
