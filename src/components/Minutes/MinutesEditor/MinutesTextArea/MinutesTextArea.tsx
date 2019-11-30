@@ -28,7 +28,7 @@ const MinutesTextArea = forwardRef((props: IOneOnOneProps, ref: Ref<HTMLTextArea
 
   return (
     <div>
-      <p>{props.title}</p>
+      <h4>{props.title}</h4>
       <div className={styles.MinutesTextArea}>{noteArea}</div>
     </div>
   );

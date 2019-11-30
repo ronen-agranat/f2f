@@ -7,14 +7,19 @@
 
 .TextAreaEdit {
   width: 100%;
-  height: 130px;
-    overflow-y: scroll;
+  height: 300px;
+  overflow-y: scroll;
+  font-size: 11pt;
+  line-height: 1.5;
+  font-family: 'Roboto Mono', monospace;
+  border: none;
 }
 
 .TextAreaShow {
   width: 100%;
-    min-height: 130px;
-  font-size: small;
+  min-height: 130px;
   padding: 3px;
   white-space: pre;
+  font-size: 11pt;
+  /* font-family: 'Roboto Slab', serif; */
 }

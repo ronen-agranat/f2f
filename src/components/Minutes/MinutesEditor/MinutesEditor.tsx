@@ -66,7 +66,7 @@ const MinutesEditor = (props: IOneOnOneMinutesProps) => {
 
   return (
     <div className={styles.MinutesEditor}>
-      <div className={styles.dateHeader}>{props.date}</div>
+      <h3 className={styles.dateHeader}>{props.date}</h3>
       <div className={styles.Notepad}>
         {textAreas}
       </div>
