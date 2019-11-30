@@ -1,6 +1,7 @@
 .NavBar nav {
   display: flex;
-  justify-content: flex-end;
+  justify-content: flex-start;
+  background-color: #282c34;
   border-bottom: 1px solid #ebebeb;
 }
 
@@ -19,4 +20,10 @@
 .NavBar nav ul li a:hover,
 .NavBar nav ul li a:visited {
   text-decoration: none;
+  color: #ebebeb;
+}
+
+.NavBar nav ul li a:hover {
+  text-decoration: underline;
+  color: #ebebeb;
 }
