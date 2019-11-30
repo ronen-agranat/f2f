@@ -124,14 +124,16 @@ const MinutesBrowser = (props: IOneOnOneBrowserProps) => {
   }
 
   return (
-    <div className={styles.OneOnOneBrowser}>
+    <>
+      <div className={styles.OneOnOneBrowser}>
+        {oneOnOneMinutes}
+        <MoreSessionTail
+          clicked={toggleShowMoreSessions}
+          activated={showAllSessions}
+        />
+      </div>
       <NewMinutesButton onSessionAdded={sessionAdded}/>
-      {oneOnOneMinutes}
-      <MoreSessionTail
-        clicked={toggleShowMoreSessions}
-        activated={showAllSessions}
-      />
-    </div>
+    </>
   );
 };
 
