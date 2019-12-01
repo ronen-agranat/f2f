@@ -47,22 +47,34 @@ const NewPersonForm = () => {
     >
       {({ isSubmitting }) => (
         <Form>
-          <h1>New person form</h1>
-          <div>
-            <label>Name</label>
-            <Field name="name"/>
-            <ErrorMessage name="name" component="div"/>
-          </div>
-          <div>
-            <label>Role</label>
-            <Field name="role"/>
-            <ErrorMessage name="role" component="div"/>
-          </div>
-          <div>
-            <button type="submit" disabled={isSubmitting}>
-              Submit
-            </button>
-          </div>
+          <h2>Add new person</h2>
+          <p>Required fields are followed by <strong><abbr title="required">*</abbr></strong>.</p>
+          <section>
+            <h3>Basic information</h3>
+            <p>
+              <label htmlFor='name'>
+                <span>Name:&nbsp;</span>
+                <strong><abbr title="required">*</abbr>&nbsp;</strong>
+              </label>
+              <Field name="name"/>
+              <ErrorMessage name="name" component="div"/>
+            </p>
+            <p>
+              <label htmlFor='role'>
+                <span>Role:&nbsp;</span>
+                <strong><abbr title="required">*</abbr>&nbsp;</strong>
+              </label>
+              <Field name="role"/>
+              <ErrorMessage name="role" component="div"/>
+            </p>
+          </section>
+          <section>
+            <p>
+              <button type="submit" disabled={isSubmitting}>
+                Submit
+              </button>
+            </p>
+          </section>
         </Form>
       )}
     </Formik>
