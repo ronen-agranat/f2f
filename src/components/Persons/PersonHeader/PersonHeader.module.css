@@ -9,20 +9,20 @@
 }
 
 
-.title__name {
+.PersonHeader .title__name {
   font-size: 15pt;
   font-weight: bold;
 }
 
-.title__name a,
-.title__name a:visited,
-.title__name a:hover,
-.title__name a:active {
+.PersonHeader .title__name a,
+.PersonHeader .title__name a:visited,
+.PersonHeader .title__name a:hover,
+.PersonHeader .title__name a:active {
   text-decoration: none;
   color: #111111;
 }
 
-.title__role {
+.PersonHeader .title__role {
   font-size: 9pt;
   font-weight: bold;
 }
@@ -33,4 +33,59 @@
   vertical-align: middle;
   border-radius: 50%;
   border: solid white 2px;
+}
+
+.EditPersonButton a,
+.EditPersonButton a:active,
+.EditPersonButton a:visited {
+  display: inline;
+  background-color: #67d1ff;
+  padding: 3px 10px;
+  margin: 3px;
+  width: 7em;
+  text-align: center;
+  border-radius: 5px;
+  color: #111111;
+  text-decoration: none;
+  font-size: 10pt;
+}
+
+.EditPersonButton a:hover {
+  display: inline;
+  background-color: rgba(103, 209, 255, 0.65);
+  padding: 3px 10px;
+  margin: 3px;
+  width: 7em;
+  text-align: center;
+  border-radius: 5px;
+  color: #111111;
+  text-decoration: none;
+  font-size: 10pt;
+}
+
+.DeletePersonButton {
+  display: inline;
+  background-color: #de00ab;
+  padding: 3px 10px;
+  color: #efefef;
+  margin: 3px;
+  width: 7em;
+  text-align: center;
+  border-radius: 5px;
+  text-decoration: none;
+  font-size: 10pt;
+}
+
+.DeletePersonButton:hover {
+  cursor: pointer;
+  display: inline;
+  background-color: #de001c;
+  padding: 3px 10px;
+  margin: 3px;
+  width: 7em;
+  text-align: center;
+  border-radius: 5px;
+  color: white;
+  text-decoration: none;
+  font-size: 10pt;
 }
