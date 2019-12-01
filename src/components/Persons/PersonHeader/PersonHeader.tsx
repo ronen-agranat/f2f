@@ -15,7 +15,7 @@ interface IPersonHeaderProps {
 }
 
 const PersonHeader = (props: IPersonHeaderProps) => {
-//  const imageAltText = 'Profile image';
+  //  const imageAltText = 'Profile image';
 
   const deletePerson = useCallback(() => {
     if (
@@ -36,7 +36,9 @@ const PersonHeader = (props: IPersonHeaderProps) => {
   }, [props]);
 
   const deletePersonButton = props.showDeletePerson ? (
-    <button onClick={deletePerson}>Delete person</button>
+    <div className={styles.DeletePersonButton} onClick={deletePerson}>
+      Remove
+    </div>
   ) : null;
 
   return (
