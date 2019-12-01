@@ -15,7 +15,7 @@ interface IPersonHeaderProps {
 }
 
 const PersonHeader = (props: IPersonHeaderProps) => {
-  const imageAltText = 'Profile image';
+//  const imageAltText = 'Profile image';
 
   const deletePerson = useCallback(() => {
     if (
@@ -42,9 +42,9 @@ const PersonHeader = (props: IPersonHeaderProps) => {
   return (
     <div className={styles.PersonHeader}>
       <div className={styles.title}>
-        {Boolean(props.imageUrl) ? (
+        {/*Boolean(props.imageUrl) ? (
           <img src={props.imageUrl} alt={imageAltText}/>
-        ) : null}
+        ) : null*/}
         <div className={styles.title__name}>
           <Link to={`/persons/${props.id}`}>
             {Boolean(props.name) ? <div>{props.name}</div> : null}
