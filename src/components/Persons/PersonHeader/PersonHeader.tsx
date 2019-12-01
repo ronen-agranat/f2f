@@ -52,7 +52,13 @@ const PersonHeader = (props: IPersonHeaderProps) => {
         </div>
         {Boolean(props.role) ? <div>{props.role}</div> : null}
       </div>
-      {deletePersonButton}
+      <div>
+        <span className={styles.EditPersonButton}>
+          <Link to={`persons/${props.id}/edit`}>Edit person</Link>
+        </span>
+        &nbsp;
+        {deletePersonButton}
+      </div>
     </div>
   );
 };

@@ -34,3 +34,31 @@
   border-radius: 50%;
   border: solid white 2px;
 }
+
+.EditPersonButton a,
+.EditPersonButton a:active,
+.EditPersonButton a:visited {
+  display: inline;
+  background-color: #67d1ff;
+  padding: 3px 10px;
+  margin: 3px;
+  width: 7em;
+  text-align: center;
+  border-radius: 5px;
+  color: #111111;
+  text-decoration: none;
+  font-size: 10pt;
+}
+
+.EditPersonButton a:hover {
+  display: inline;
+  background-color: rgba(103, 209, 255, 0.65);
+  padding: 3px 10px;
+  margin: 3px;
+  width: 7em;
+  text-align: center;
+  border-radius: 5px;
+  color: #111111;
+  text-decoration: none;
+  font-size: 10pt;
+}

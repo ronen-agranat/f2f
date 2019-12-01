@@ -9,6 +9,7 @@ import {
 import NewPersonForm from './components/Persons/NewPersonForm/NewPersonForm';
 
 import NavBar from './components/NavBar/NavBar';
+import { NotFound } from './components/ErrorPages/NotFound/NotFound';
 
 function App() {
   return (
@@ -19,6 +20,7 @@ function App() {
         <Route path='/persons/' exact component={PersonsBrowser}/>
         <Route path='/persons/create' exact component={NewPersonForm}/>
         <Route path='/persons/:id' exact component={PersonCard}/>
+        <Route component={NotFound}/>
       </Switch>
     </Router>
   );
