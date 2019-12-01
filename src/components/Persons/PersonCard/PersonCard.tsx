@@ -19,10 +19,9 @@ interface IPersonParams {
 
 const PersonCard = (props: IPersonCardProps) => {
   const params = useParams<IPersonParams>();
+
   const personId = params.id ? Number(params.id) : props.personId;
-
   const [person, setPersonState] = useState<Person | undefined>();
-
   const [personLoaded, setPersonLoaded] = useState(false);
 
   useEffect(() => {

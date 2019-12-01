@@ -56,7 +56,7 @@ const PersonHeader = (props: IPersonHeaderProps) => {
       </div>
       <div>
         <span className={styles.EditPersonButton}>
-          <Link to={`persons/${props.id}/edit`}>Edit person</Link>
+          <Link to={`/persons/${props.id}/edit`}>Edit person</Link>
         </span>
         &nbsp;
         {deletePersonButton}

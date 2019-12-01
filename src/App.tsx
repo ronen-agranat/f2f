@@ -19,6 +19,7 @@ function App() {
         <Route path='/' exact component={PersonsBrowser}/>
         <Route path='/persons/' exact component={PersonsBrowser}/>
         <Route path='/persons/create' exact component={NewPersonForm}/>
+        <Route path='/persons/:id/edit' exact component={NewPersonForm}/>
         <Route path='/persons/:id' exact component={PersonCard}/>
         <Route component={NotFound}/>
       </Switch>
