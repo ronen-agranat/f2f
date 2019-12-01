@@ -9,20 +9,20 @@
 }
 
 
-.title__name {
+.PersonHeader .title__name {
   font-size: 15pt;
   font-weight: bold;
 }
 
-.title__name a,
-.title__name a:visited,
-.title__name a:hover,
-.title__name a:active {
+.PersonHeader .title__name a,
+.PersonHeader .title__name a:visited,
+.PersonHeader .title__name a:hover,
+.PersonHeader .title__name a:active {
   text-decoration: none;
   color: #111111;
 }
 
-.title__role {
+.PersonHeader .title__role {
   font-size: 9pt;
   font-weight: bold;
 }
