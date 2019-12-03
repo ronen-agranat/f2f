@@ -11,6 +11,13 @@ interface IOneOnOneProps {
   focused: () => void;
 }
 
+// Given notes text, render a markdown-like rendition
+const parseNotesText = (text: string): string => {
+  let newText = text;
+  newText = newText.replace(/^(\s*)[-*]/mg, '$1•');
+  return newText;
+};
+
 const MinutesTextArea = forwardRef((props: IOneOnOneProps, ref: Ref<HTMLTextAreaElement>) => {
   const noteArea = props.active ? (
     <textarea
@@ -22,7 +29,7 @@ const MinutesTextArea = forwardRef((props: IOneOnOneProps, ref: Ref<HTMLTextArea
     />
   ) : (
     <div className={styles.TextAreaShow} onClick={props.focused}>
-      {Boolean(props.notes.length) ? props.notes : props.title}
+      {Boolean(props.notes.length) ? parseNotesText(props.notes) : props.title}
     </div>
   );
 
