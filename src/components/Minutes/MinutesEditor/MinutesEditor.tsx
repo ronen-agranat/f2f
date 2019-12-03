@@ -57,7 +57,7 @@ const MinutesEditor = (props: IOneOnOneMinutesProps) => {
       current.selectionStart = selectionPosition;
       current.selectionEnd = selectionPosition;
 
-      // Scroll to bototm
+      // Scroll to bottom
       current.scrollTop = current.scrollHeight;
     }
   }, [currentNotes, props.values]);
