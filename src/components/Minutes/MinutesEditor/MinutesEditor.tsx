@@ -41,12 +41,26 @@ const MinutesEditor = (props: IOneOnOneMinutesProps) => {
 
   const textAreasToRender = [followUps, newBusiness, nextTime];
 
+  // When the selected text area changes ...
   useEffect(() => {
     const current = currentNotes.ref.current;
     if (current) {
+      // Focus the text area
       current.focus();
+
+      // Move caret to end
+      let selectionPosition = 0;
+      const currentNotesValue = props.values.get(currentNotes.name);
+      if (currentNotesValue) {
+        selectionPosition = currentNotesValue.length;
+      }
+      current.selectionStart = selectionPosition;
+      current.selectionEnd = selectionPosition;
+
+      // Scroll to bototm
+      current.scrollTop = current.scrollHeight;
     }
-  }, [currentNotes]);
+  }, [currentNotes, props.values]);
 
   const textAreas = textAreasToRender.map((textArea) => {
     return <MinutesTextArea
