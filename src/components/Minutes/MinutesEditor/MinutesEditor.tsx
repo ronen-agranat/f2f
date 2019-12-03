@@ -60,7 +60,11 @@ const MinutesEditor = (props: IOneOnOneMinutesProps) => {
       // Scroll to bottom
       current.scrollTop = current.scrollHeight;
     }
-  }, [currentNotes, props.values]);
+    // TODO Need to update when currentNotes changed but NOT when value of current notes
+    // changed; gives warning that value needs to be a dependency, but it shouldn't be.
+    // need to think of way to fix this; maybe to cache initial note values?
+    // eslint-disable-next-line
+  }, [currentNotes]);
 
   const textAreas = textAreasToRender.map((textArea) => {
     return <MinutesTextArea
