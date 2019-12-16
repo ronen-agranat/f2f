@@ -1,4 +1,4 @@
-import React, { ChangeEvent, useEffect, useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import PropTypes from 'prop-types';
 import { format } from 'date-fns';
 import { AxiosError, AxiosResponse } from 'axios';
@@ -57,13 +57,13 @@ const MinutesBrowser = (props: IOneOnOneBrowserProps) => {
 
   const notesChanged = (
     minutesId: number,
-    event: ChangeEvent<HTMLTextAreaElement>,
+    text: string,
     textAreaName: string,
   ) => {
     let newSession: MinutesInterface | undefined;
     const newSessions = sessions.map(s => {
       if (s.id === minutesId) {
-        newSession = { ...s, [textAreaName]: event.target.value };
+        newSession = { ...s, [textAreaName]: text };
         return newSession;
       } else {
         return s;

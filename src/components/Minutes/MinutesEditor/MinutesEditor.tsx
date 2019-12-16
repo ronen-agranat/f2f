@@ -1,4 +1,4 @@
-import React, { ChangeEvent, createRef, RefObject, useEffect, useState } from 'react';
+import React, { createRef, RefObject, useEffect, useState } from 'react';
 import PropTypes from "prop-types";
 
 import MinutesTextArea from './MinutesTextArea/MinutesTextArea';
@@ -29,7 +29,7 @@ interface IOneOnOneMinutesProps {
   id: number;
   notesChanged: (
     id: number,
-    event: ChangeEvent<HTMLTextAreaElement>,
+    text: string,
     textAreaName: string,
   ) => void;
   values: Map<string, string>;
@@ -72,8 +72,8 @@ const MinutesEditor = (props: IOneOnOneMinutesProps) => {
       title={textArea.displayName}
       notes={props.values.get(textArea.name) || ''}
       key={`textarea_${props.id}_${textArea.name}`}
-      notesChanged={(event: ChangeEvent<HTMLTextAreaElement>) => {
-        props.notesChanged(props.id, event, textArea.name);
+      notesChanged={(text: string) => {
+        props.notesChanged(props.id, text, textArea.name);
       }}
       active={currentNotes === textArea}
       focused={() => {
