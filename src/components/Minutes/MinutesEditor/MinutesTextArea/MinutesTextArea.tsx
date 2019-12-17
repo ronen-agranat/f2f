@@ -33,15 +33,16 @@ const MinutesTextArea = forwardRef((props: IOneOnOneProps, ref: Ref<HTMLTextArea
       className={styles.TextAreaEdit}
       onChange={(event: ChangeEvent<HTMLTextAreaElement>) => {
         // Indent level
+        const selectionStart = event.target.selectionStart;
+        let text = event.target.value;
 
         // Only maintain indent if string is getting longer (enter not backspace)
-        if (event.target.value > notesValue) {
-          props.notesChanged(parseInputText(event.target.value));
-          setNotesValue(parseInputText(event.target.value));
-        } else {
-          props.notesChanged(event.target.value);
-          setNotesValue(event.target.value);
+        if (text > notesValue) {
+          text = parseInputText(text);
         }
+
+        props.notesChanged(text);
+        setNotesValue(text);
       }}
       value={notesValue}
       placeholder={props.title}
