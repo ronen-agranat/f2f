@@ -38,6 +38,9 @@ interface IOneOnOneMinutesProps {
 // TODO: Show time since now so that you can easily say 'we met last week' or 'its been a while'
 const MinutesEditor = (props: IOneOnOneMinutesProps) => {
   const [currentNotes, setCurrentNotes] = useState<NoteArea>(followUps);
+  const [currentNotesName, setCurrentNotesName] = useState<string>('followUps');
+
+  const [restoreSelectionPosition, setRestoreSelectionPosition] = useState(-1);
 
   const textAreasToRender = [followUps, newBusiness, nextTime];
 
@@ -64,7 +67,24 @@ const MinutesEditor = (props: IOneOnOneMinutesProps) => {
     // changed; gives warning that value needs to be a dependency, but it shouldn't be.
     // need to think of way to fix this; maybe to cache initial note values?
     // eslint-disable-next-line
-  }, [currentNotes]);
+  }, [currentNotesName]);
+
+  useEffect(() => {
+    // Restore selection position
+    if (restoreSelectionPosition === -1) {
+      return;
+    }
+
+    const current = currentNotes.ref.current;
+    if (current) {
+      current.selectionStart = restoreSelectionPosition;
+      current.selectionEnd = restoreSelectionPosition;
+    }
+    // TODO Need to update when currentNotes changed but NOT when value of current notes
+    // changed; gives warning that value needs to be a dependency, but it shouldn't be.
+    // need to think of way to fix this; maybe to cache initial note values?
+    // eslint-disable-next-line
+  }, [restoreSelectionPosition]);
 
   const textAreas = textAreasToRender.map((textArea) => {
     return <MinutesTextArea
@@ -76,8 +96,12 @@ const MinutesEditor = (props: IOneOnOneMinutesProps) => {
         props.notesChanged(props.id, text, textArea.name);
       }}
       active={currentNotes === textArea}
+      restoreSelection={(position) => {
+        setRestoreSelectionPosition(position);
+      }}
       focused={() => {
         setCurrentNotes(textArea);
+        setCurrentNotesName(textArea.name);
       }}
     />;
   });

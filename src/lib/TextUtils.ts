@@ -16,14 +16,14 @@ export const numberOfLines = (text: string) => {
 
 // Parse after text on input (textarea)
 // "Input filter"
-export const parseInputText = (text: string): string => {
+export const parseInputText = (text: string): [string, number, boolean] => {
   let newText = text;
 
   let nLines = numberOfLines(newText);
 
   // Don't process if less than 2 lines or no characters
   if (nLines < 2 || newText.length < 1) {
-    return newText;
+    return [newText, 0, false];
   }
 
   // FIXME: There is an off-by-one error somewhere here (why is the previous line -2?)
@@ -34,12 +34,14 @@ export const parseInputText = (text: string): string => {
   const lastChar = newText.charAt(newText.length - 1);
 
   // If last character was new line
+  let addedIndent = false;
   if (lastChar === '\n') {
     if (previousLineIndentLevel > 0) {
+      addedIndent = true;
       newText = newText.concat(' '.repeat(previousLineIndentLevel));
     }
   }
 
-  return newText;
+  return [newText, previousLineIndentLevel, addedIndent];
 };
 

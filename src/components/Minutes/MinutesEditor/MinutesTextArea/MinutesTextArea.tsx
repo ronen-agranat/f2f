@@ -11,6 +11,7 @@ interface IOneOnOneProps {
   title: string;
   active: boolean;
   focused: () => void;
+  restoreSelection: (position: number) => void;
 }
 
 const BULLET_CHARACTERS = ['-', '•', '*'];
@@ -33,16 +34,35 @@ const MinutesTextArea = forwardRef((props: IOneOnOneProps, ref: Ref<HTMLTextArea
       className={styles.TextAreaEdit}
       onChange={(event: ChangeEvent<HTMLTextAreaElement>) => {
         // Indent level
-        const selectionStart = event.target.selectionStart;
         let text = event.target.value;
 
+        const selectionStart = event.target.selectionStart;
+        let indentLevel = 0;
+        let addedIndent = false;
         // Only maintain indent if string is getting longer (enter not backspace)
-        if (text > notesValue) {
-          text = parseInputText(text);
+        if (text.length > notesValue.length) {
+          // Only the part of the text up until the cursor should be processed
+          let prefix = text.slice(0, selectionStart);
+          let suffix = text.slice(selectionStart);
+          [text, indentLevel, addedIndent] = parseInputText(prefix);
+          text = text.concat(suffix);
         }
 
         props.notesChanged(text);
         setNotesValue(text);
+
+        if (addedIndent) {
+          // FIXME: There is an edge case here that is not functioning correctly.
+          // It is not getting invoked when on the last two lines:
+          // - select last character position
+          // click bullet on previous line
+          // press enter
+          // indent is created
+          // but position is not restored
+
+          // Restore the selection of the caret
+          props.restoreSelection(selectionStart + indentLevel);
+        }
       }}
       value={notesValue}
       placeholder={props.title}
