@@ -61,7 +61,14 @@ const MinutesTextArea = forwardRef((props: IOneOnOneProps, ref: Ref<HTMLTextArea
           // but position is not restored
 
           // Restore the selection of the caret
-          props.restoreSelection(selectionStart + indentLevel);
+          // props.restoreSelection(selectionStart + indentLevel);
+          if (ref && typeof ref === 'object') {
+            if (ref.current) {
+              console.log('setting position and value');
+              ref.current.value = text;
+              ref.current.selectionStart = ref.current.selectionEnd = selectionStart + indentLevel;
+            }
+          }
         }
       }}
       value={notesValue}
