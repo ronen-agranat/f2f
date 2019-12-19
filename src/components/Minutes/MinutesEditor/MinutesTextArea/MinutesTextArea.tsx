@@ -11,7 +11,6 @@ interface IOneOnOneProps {
   title: string;
   active: boolean;
   focused: () => void;
-  restoreSelection: (position: number) => void;
 }
 
 const BULLET_CHARACTERS = ['-', '•', '*'];
