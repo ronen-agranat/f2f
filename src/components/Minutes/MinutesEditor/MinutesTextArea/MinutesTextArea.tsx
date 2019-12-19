@@ -53,16 +53,6 @@ const MinutesTextArea = forwardRef(
           setNotesValue(text);
 
           if (addedIndent) {
-            // FIXME: There is an edge case here that is not functioning correctly.
-            // It is not getting invoked when on the last two lines:
-            // - select last character position
-            // click bullet on previous line
-            // press enter
-            // indent is created
-            // but position is not restored
-
-            // Restore the selection of the caret
-            // props.restoreSelection(selectionStart + indentLevel);
             if (ref && typeof ref === 'object') {
               if (ref.current) {
                 ref.current.value = text;
