@@ -14,6 +14,19 @@ export const numberOfLines = (text: string) => {
   return text.split('\n').length;
 };
 
+export const hasBulletCharacter = (text: string) => {
+  if (/^\s*[*-•-]/.test(text)) {
+    return true;
+  }
+};
+
+export const bulletCharacter = (text: string) => {
+  let match = /^\s*([*-•-])/.exec(text);
+  if (match && match[1]) {
+    return match[1];
+  }
+};
+
 // Parse after text on input (textarea)
 // "Input filter"
 export const parseInputText = (text: string): [string, number, boolean] => {
@@ -29,7 +42,7 @@ export const parseInputText = (text: string): [string, number, boolean] => {
   // FIXME: There is an off-by-one error somewhere here (why is the previous line -2?)
   const previousLine = text.split('\n')[nLines - 2];
 
-  const previousLineIndentLevel = indentLevel(previousLine);
+  let previousLineIndentLevel = indentLevel(previousLine);
 
   const lastChar = newText.charAt(newText.length - 1);
 
@@ -39,6 +52,12 @@ export const parseInputText = (text: string): [string, number, boolean] => {
     if (previousLineIndentLevel > 0) {
       addedIndent = true;
       newText = newText.concat(' '.repeat(previousLineIndentLevel));
+
+      const bullet = bulletCharacter(previousLine);
+      if (bullet) {
+        newText = newText.concat(bullet + ' ');
+        previousLineIndentLevel += 2;
+      }
     }
   }
 
