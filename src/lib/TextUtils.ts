@@ -40,9 +40,10 @@ export const parseInputText = (text: string): [string, number, boolean] => {
     return [newText, 0, false];
   }
 
-  // FIXME: There is an off-by-one error somewhere here (why is the previous line -2?)
+  // `-2` because: `-1` would normally be the last line.
+  // When the character in the split IS the last character in the string,
+  // then an empty string is appended to the end of the array returned by `split`
   const previousLine = text.split('\n')[nLines - 2];
-  console.log(text.split('\n'));
 
   let previousLineIndentLevel = indentLevel(previousLine);
 
@@ -66,4 +67,3 @@ export const parseInputText = (text: string): [string, number, boolean] => {
 
   return [newText, previousLineIndentLevel, addedIndent];
 };
-
