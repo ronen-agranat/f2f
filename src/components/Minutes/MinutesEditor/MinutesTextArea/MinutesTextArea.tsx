@@ -28,39 +28,44 @@ const MinutesTextArea = forwardRef(
   (props: IOneOnOneProps, ref: Ref<HTMLTextAreaElement>) => {
     const [notesValue, setNotesValue] = useState(props.notes);
 
+    const onChangeHandler = (event: ChangeEvent<HTMLTextAreaElement>) => {
+      // Indent level
+      let text = event.target.value;
+
+      const selectionStart = event.target.selectionStart;
+      let indentLevel = 0;
+      let addedIndent = false;
+      // Only maintain indent if string is getting longer (enter not backspace)
+      if (text.length > notesValue.length) {
+        // Only the part of the text up until the cursor should be processed
+        let prefix = text.slice(0, selectionStart);
+        let suffix = text.slice(selectionStart);
+        [text, indentLevel, addedIndent] = parseInputText(prefix);
+        text = text.concat(suffix);
+      }
+
+      // Invoke outer component's change handler
+      props.notesChanged(text);
+      // Update internal state (controlled component)
+      setNotesValue(text);
+
+      if (addedIndent) {
+        // Restore caret position
+        if (ref && typeof ref === 'object') {
+          if (ref.current) {
+            ref.current.value = text;
+            ref.current.selectionStart = ref.current.selectionEnd =
+              selectionStart + indentLevel;
+          }
+        }
+      }
+    };
+
     const noteArea = props.active ? (
       <textarea
         ref={ref}
         className={styles.TextAreaEdit}
-        onChange={(event: ChangeEvent<HTMLTextAreaElement>) => {
-          // Indent level
-          let text = event.target.value;
-
-          const selectionStart = event.target.selectionStart;
-          let indentLevel = 0;
-          let addedIndent = false;
-          // Only maintain indent if string is getting longer (enter not backspace)
-          if (text.length > notesValue.length) {
-            // Only the part of the text up until the cursor should be processed
-            let prefix = text.slice(0, selectionStart);
-            let suffix = text.slice(selectionStart);
-            [text, indentLevel, addedIndent] = parseInputText(prefix);
-            text = text.concat(suffix);
-          }
-
-          props.notesChanged(text);
-          setNotesValue(text);
-
-          if (addedIndent) {
-            if (ref && typeof ref === 'object') {
-              if (ref.current) {
-                ref.current.value = text;
-                ref.current.selectionStart = ref.current.selectionEnd =
-                  selectionStart + indentLevel;
-              }
-            }
-          }
-        }}
+        onChange={onChangeHandler}
         value={notesValue}
         placeholder={props.title}
       />
