@@ -1,9 +1,12 @@
-import React, { ChangeEvent, forwardRef, Ref, useState } from 'react';
+import React, { ChangeEvent, KeyboardEvent, forwardRef, Ref, useState } from 'react';
 import PropTypes from 'prop-types';
 
 import styles from './MinutesTextArea.module.css';
 
-import { parseInputText } from '../../../../lib/TextUtils';
+import {
+  parseInputText,
+  positionOfLineStart,
+} from '../../../../lib/TextUtils';
 
 interface IOneOnOneProps {
   notesChanged: (text: string) => void;
@@ -28,6 +31,34 @@ const MinutesTextArea = forwardRef(
   (props: IOneOnOneProps, ref: Ref<HTMLTextAreaElement>) => {
     const [notesValue, setNotesValue] = useState(props.notes);
 
+    const onKeyDownHandler = (event: KeyboardEvent<HTMLTextAreaElement>) => {
+      if (event.key === 'Tab') {
+        event.preventDefault();
+
+        if (ref && typeof ref === 'object') {
+          if (ref.current) {
+            // Handling keypress goes here
+            let text = ref.current.value;
+            const selectionStart = ref.current.selectionStart;
+
+            const lineStart = positionOfLineStart(text, selectionStart);
+
+            let prefix = text.slice(0, lineStart);
+            prefix = prefix.concat('  ');
+            const suffix = text.slice(lineStart);
+            const newText = prefix.concat(suffix);
+
+            updateNoteValue(newText);
+
+            ref.current.value = newText;
+            ref.current.selectionStart = ref.current.selectionEnd =
+              selectionStart + 2;
+          }
+        }
+
+      }
+    };
+
     const onChangeHandler = (event: ChangeEvent<HTMLTextAreaElement>) => {
       // Indent level
       let text = event.target.value;
@@ -44,10 +75,7 @@ const MinutesTextArea = forwardRef(
         text = text.concat(suffix);
       }
 
-      // Invoke outer component's change handler
-      props.notesChanged(text);
-      // Update internal state (controlled component)
-      setNotesValue(text);
+      updateNoteValue(text);
 
       if (addedIndent) {
         // Restore caret position
@@ -61,11 +89,19 @@ const MinutesTextArea = forwardRef(
       }
     };
 
+    const updateNoteValue = (text: string) => {
+      // Invoke outer component's change handler
+      props.notesChanged(text);
+      // Update internal state (controlled component)
+      setNotesValue(text);
+    };
+
     const noteArea = props.active ? (
       <textarea
         ref={ref}
         className={styles.TextAreaEdit}
         onChange={onChangeHandler}
+        onKeyDown={onKeyDownHandler}
         value={notesValue}
         placeholder={props.title}
       />
