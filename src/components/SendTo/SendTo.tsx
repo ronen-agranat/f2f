@@ -2,6 +2,7 @@ import React from 'react';
 import PropTypes from 'prop-types';
 
 import styles from './SendTo.module.css';
+import { PersonFinder } from '../PersonFinder/PersonFinder';
 
 interface SendToProps {
   show: boolean;
@@ -10,12 +11,10 @@ interface SendToProps {
 export const SendTo = (props: SendToProps) => {
   return props.show ?
     <div className={styles.SendTo}>
-      <p>
+      <h3>
         Send To:
-      </p>
-      <div>
-        <input type="text"/>
-      </div>
+      </h3>
+      <PersonFinder/>
     </div> : null;
 };
 

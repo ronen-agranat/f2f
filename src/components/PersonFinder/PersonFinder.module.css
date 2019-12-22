@@ -1,0 +1,12 @@
+.PersonFinder {
+
+}
+
+.PersonFinder input[type=text] {
+  width: 100%;
+}
+
+.PersonsBrowser {
+  margin: 5px;
+  padding: 5px;
+}

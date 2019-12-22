@@ -11,11 +11,7 @@
   padding: 5px;
 }
 
-.SendTo p {
+.SendTo h3 {
   font-size: 13pt;
   font-weight: bold;
-}
-
-.SendTo input[type=text] {
-  width: 100%;
 }
