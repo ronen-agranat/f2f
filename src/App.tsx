@@ -10,11 +10,13 @@ import NewPersonForm from './components/Persons/NewPersonForm/NewPersonForm';
 
 import NavBar from './components/NavBar/NavBar';
 import { NotFound } from './components/ErrorPages/NotFound/NotFound';
+import { Backdrop } from './components/UI/Backdrop/Backdrop';
 
 function App() {
   return (
     <Router>
       <NavBar/>
+      <Backdrop show={false}/>
       <Switch>
         <Route path='/' exact component={PersonsBrowser}/>
         <Route path='/persons/' exact component={PersonsBrowser}/>
