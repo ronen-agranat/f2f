@@ -37,22 +37,38 @@ const MinutesTextArea = forwardRef(
 
         if (ref && typeof ref === 'object') {
           if (ref.current) {
-            // Handling keypress goes here
             let text = ref.current.value;
             const selectionStart = ref.current.selectionStart;
-
             const lineStart = positionOfLineStart(text, selectionStart);
+            if (event.shiftKey) {
+              // Indent to left
 
-            let prefix = text.slice(0, lineStart);
-            prefix = prefix.concat('  ');
-            const suffix = text.slice(lineStart);
-            const newText = prefix.concat(suffix);
+              let prefix = text.slice(0, lineStart);
+              let suffix = text.slice(lineStart);
 
-            updateNoteValue(newText);
+              if (suffix.length >= 2 && suffix.startsWith('  ')) {
+                suffix = suffix.slice(2);
+                const newText = prefix.concat(suffix);
 
-            ref.current.value = newText;
-            ref.current.selectionStart = ref.current.selectionEnd =
-              selectionStart + 2;
+                updateNoteValue(newText);
+
+                ref.current.value = newText;
+                ref.current.selectionStart = ref.current.selectionEnd =
+                  selectionStart - 2;
+              }
+            } else {
+              // Indent to right
+              let prefix = text.slice(0, lineStart);
+              prefix = prefix.concat('  ');
+              const suffix = text.slice(lineStart);
+              const newText = prefix.concat(suffix);
+
+              updateNoteValue(newText);
+
+              ref.current.value = newText;
+              ref.current.selectionStart = ref.current.selectionEnd =
+                selectionStart + 2;
+            }
           }
         }
 
