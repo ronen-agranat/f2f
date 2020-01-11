@@ -12,14 +12,33 @@ import NavBar from './components/NavBar/NavBar';
 import { NotFound } from './components/ErrorPages/NotFound/NotFound';
 import { Backdrop } from './components/UI/Backdrop/Backdrop';
 import { SendTo } from './components/SendTo/SendTo';
+import { PersonSwitcherContext } from './contexts/PersonSwitcherContext';
 
 function App() {
+  // TODO: Move into context
   const [showSendTo, setShowSendTo] = useState(true);
 
+  const [selectedText, setSelectedText] = useState('');
+
+  const personSwitcherContextValue = {
+    // Expose state via context to all context consumers.
+    // Enables attributes to be read and modified directly without threading
+    // through multiple components via props
+    selectedText,
+    setSelectedText,
+  };
+
+  // TODO: Move into context
   const hideSendTo = () => {
     setShowSendTo(false);
   };
 
+  // TODO: Move into context
+  const openSendTo = () => {
+    setShowSendTo(true);
+  };
+
+  // TODO: Move to dedicated component that is powered by context provider
   const sendTo = (
     <>
       <Backdrop/>
@@ -27,25 +46,24 @@ function App() {
     </>
   );
 
-  const openSendTo = () => {
-    setShowSendTo(true);
-  };
-
   return (
-    <Router>
-      <NavBar/>
-      {showSendTo ? sendTo : null}
-      <Switch>
-        <Route path='/' exact component={PersonsBrowser}/>
-        <Route path='/persons/' exact component={PersonsBrowser}/>
-        <Route path='/persons/create' exact component={NewPersonForm}/>
-        <Route path='/persons/:id/edit' exact component={NewPersonForm}/>
-        <Route path='/persons/:id' exact>
-          <PersonCard openSendTo={openSendTo}/>
-        </Route>
-        <Route component={NotFound}/>
-      </Switch>
-    </Router>
+    <PersonSwitcherContext.Provider value={personSwitcherContextValue}>
+      <Router>
+        <NavBar/>
+        {/* Move into component that is powered by context provider */}
+        {showSendTo ? sendTo : null}
+        <Switch>
+          <Route path='/' exact component={PersonsBrowser}/>
+          <Route path='/persons/' exact component={PersonsBrowser}/>
+          <Route path='/persons/create' exact component={NewPersonForm}/>
+          <Route path='/persons/:id/edit' exact component={NewPersonForm}/>
+          <Route path='/persons/:id' exact>
+            <PersonCard openSendTo={openSendTo}/>
+          </Route>
+          <Route component={NotFound}/>
+        </Switch>
+      </Router>
+    </PersonSwitcherContext.Provider>
   );
 }
 

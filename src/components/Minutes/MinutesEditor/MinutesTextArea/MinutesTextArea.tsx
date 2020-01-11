@@ -1,4 +1,4 @@
-import React, { ChangeEvent, KeyboardEvent, forwardRef, Ref, useState } from 'react';
+import React, { ChangeEvent, KeyboardEvent, forwardRef, Ref, useState, useContext } from 'react';
 import PropTypes from 'prop-types';
 
 import styles from './MinutesTextArea.module.css';
@@ -7,6 +7,7 @@ import {
   parseInputText,
   positionOfLineStart,
 } from '../../../../lib/TextUtils';
+import { PersonSwitcherContext } from '../../../../contexts/PersonSwitcherContext';
 
 interface IOneOnOneProps {
   notesChanged: (text: string) => void;
@@ -31,6 +32,8 @@ const parseNotesText = (text: string): string => {
 const MinutesTextArea = forwardRef(
   (props: IOneOnOneProps, ref: Ref<HTMLTextAreaElement>) => {
     const [notesValue, setNotesValue] = useState(props.notes);
+
+    const { setSelectedText } = useContext(PersonSwitcherContext);
 
     const onKeyDownHandler = (event: KeyboardEvent<HTMLTextAreaElement>) => {
       if (event.key === 'Tab') {
@@ -115,11 +118,21 @@ const MinutesTextArea = forwardRef(
       setNotesValue(text);
     };
 
+    const onSelectHandler = () => {
+      if (ref && typeof ref === 'object') {
+        if (ref.current) {
+          const selectedText = ref.current.value.slice(ref.current.selectionStart, ref.current.selectionEnd);
+          setSelectedText(selectedText);
+        }
+      }
+    };
+
     const noteArea = props.active ? (
       <textarea
         ref={ref}
         className={styles.TextAreaEdit}
         onChange={onChangeHandler}
+        onSelect={onSelectHandler}
         onKeyDown={onKeyDownHandler}
         value={notesValue}
         placeholder={props.title}
