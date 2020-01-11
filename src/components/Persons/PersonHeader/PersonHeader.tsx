@@ -12,6 +12,7 @@ interface IPersonHeaderProps {
   // TODO: These need to move out of here to edit controls for person / list of persons
   showDeletePerson?: boolean;
   personDeleted?: (id: number) => void;
+  clicked?: (id: number) => void;
 }
 
 const PersonHeader = (props: IPersonHeaderProps) => {
@@ -41,8 +42,14 @@ const PersonHeader = (props: IPersonHeaderProps) => {
     </div>
   ) : null;
 
+  const clickHandler = () => {
+    if (props.clicked) {
+      props.clicked(props.id);
+    }
+  };
+
   return (
-    <div className={styles.PersonHeader}>
+    <div className={styles.PersonHeader} onClick={clickHandler}>
       <div className={styles.title}>
         {/*Boolean(props.imageUrl) ? (
           <img src={props.imageUrl} alt={imageAltText}/>
@@ -72,6 +79,7 @@ PersonHeader.propTypes = {
   id: PropTypes.number,
   showDeletePerson: PropTypes.bool,
   personDeleted: PropTypes.func,
+  clicked: PropTypes.func,
 };
 
 export default PersonHeader;

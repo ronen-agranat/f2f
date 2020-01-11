@@ -1,5 +1,5 @@
 import React, { ChangeEvent, useEffect, useState } from 'react';
-// import PropTypes from 'prop-types';
+import PropTypes from 'prop-types';
 
 import styles from './PersonFinder.module.css';
 import { Person } from '../../interfaces/person.interface';
@@ -8,6 +8,7 @@ import { AxiosError, AxiosResponse } from 'axios';
 import PersonHeader from '../Persons/PersonHeader/PersonHeader';
 
 interface PersonFinderProps {
+  personSelected: (personId: number) => void;
 }
 
 export const PersonFinder = (props: PersonFinderProps) => {
@@ -47,6 +48,7 @@ export const PersonFinder = (props: PersonFinderProps) => {
           name={person.name}
           key={person.id}
           id={person.id}
+          clicked={props.personSelected}
         />
       ));
   }
@@ -71,4 +73,6 @@ export const PersonFinder = (props: PersonFinderProps) => {
   );
 };
 
-PersonFinder.propTypes = {};
+PersonFinder.propTypes = {
+  personSelected: PropTypes.func.isRequired,
+};

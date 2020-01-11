@@ -1,17 +1,16 @@
 .SendTo {
   position: absolute;
-  top: 50%;
+  top: 120px;
   left: 50%;
-  transform: translate(-50%, -50%);
+  transform: translate(-50%, 0%);
   z-index: 500;
   width: 75%;
-  background: #efefef;
+  background: #f9f9f9;
   border: 2px solid #282c34;
   border-radius: 5px;
   padding: 5px;
 }
 
-.SendTo h3 {
-  font-size: 13pt;
-  font-weight: bold;
+.SendTo p {
+  display: inline;
 }

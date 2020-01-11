@@ -14,6 +14,7 @@ interface IOneOnOneProps {
   title: string;
   active: boolean;
   focused: () => void;
+  openSendTo: () => void;
 }
 
 const BULLET_CHARACTERS = ['-', '•', '*'];
@@ -72,6 +73,8 @@ const MinutesTextArea = forwardRef(
           }
         }
 
+      } else if (event.key === ' ' && event.ctrlKey) {
+        props.openSendTo();
       }
     };
 
@@ -142,6 +145,7 @@ MinutesTextArea.propTypes = {
   title: PropTypes.string.isRequired,
   active: PropTypes.bool.isRequired,
   focused: PropTypes.func.isRequired,
+  openSendTo: PropTypes.func.isRequired,
 };
 
 export default MinutesTextArea;

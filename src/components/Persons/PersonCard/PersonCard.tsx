@@ -1,4 +1,5 @@
 import React, { useEffect, useState } from 'react';
+import PropTypes from 'prop-types';
 import PersonHeader from '../PersonHeader/PersonHeader';
 import MinutesBrowser from '../../Minutes/MinutesBrowser/MinutesBrowser';
 import FaceToFace from '../../../services/FaceToFace';
@@ -10,7 +11,8 @@ import { AxiosError, AxiosResponse } from 'axios';
 import { useParams } from 'react-router-dom';
 
 interface IPersonCardProps {
-  personId: number;
+  personId?: number;
+  openSendTo: () => void;
 }
 
 interface IPersonParams {
@@ -39,7 +41,7 @@ const PersonCard = (props: IPersonCardProps) => {
 
   let personContent = null;
 
-  if (person) {
+  if (personId && person) {
     personContent = (
       <>
         <PersonHeader
@@ -48,11 +50,16 @@ const PersonCard = (props: IPersonCardProps) => {
           imageUrl={person.imageUrl}
           id={personId}
         />
-        <MinutesBrowser personId={person.id || personId}/>
+        <MinutesBrowser personId={person.id || personId} openSendTo={props.openSendTo}/>
       </>
     );
   }
   return <div className={styles.PersonCard}>{personContent}</div>;
+};
+
+PersonCard.propTypes = {
+  personId: PropTypes.number,
+  openSendTo: PropTypes.func.isRequired,
 };
 
 export default PersonCard;

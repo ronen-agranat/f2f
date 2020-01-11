@@ -1,23 +1,42 @@
-import React from 'react';
+import React, { KeyboardEvent } from 'react';
 import PropTypes from 'prop-types';
 
 import styles from './SendTo.module.css';
 import { PersonFinder } from '../PersonFinder/PersonFinder';
 
 interface SendToProps {
-  show: boolean;
+  textToSend: string;
+  close: () => void;
 }
 
 export const SendTo = (props: SendToProps) => {
-  return props.show ?
-    <div className={styles.SendTo}>
-      <h3>
-        Send To:
-      </h3>
-      <PersonFinder/>
-    </div> : null;
+  const personSelected = (id: number) => {
+    // TODO: Add textToSend to most recent 'nextTime' minutes for user
+    props.close();
+  };
+
+  const handleKeyDown = (event: KeyboardEvent<HTMLDivElement>) => {
+    switch (event.key) {
+      case 'Escape':
+        props.close();
+        break;
+      case 'Enter':
+        props.close();
+        break;
+      default:
+        break;
+    }
+  };
+
+  return <div className={styles.SendTo} onKeyDown={handleKeyDown}>
+    <p>
+      Send To:
+    </p>
+    <PersonFinder personSelected={personSelected}/>
+  </div>;
 };
 
 SendTo.propTypes = {
-  show: PropTypes.bool.isRequired,
+  textToSend: PropTypes.string.isRequired,
+  close: PropTypes.func.isRequired,
 };

@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from 'react';
 import PersonsBrowser from './components/PersonsBrowser/PersonsBrowser';
 import PersonCard from './components/Persons/PersonCard/PersonCard';
 import {
@@ -14,17 +14,35 @@ import { Backdrop } from './components/UI/Backdrop/Backdrop';
 import { SendTo } from './components/SendTo/SendTo';
 
 function App() {
+  const [showSendTo, setShowSendTo] = useState(true);
+
+  const hideSendTo = () => {
+    setShowSendTo(false);
+  };
+
+  const sendTo = (
+    <>
+      <Backdrop/>
+      <SendTo textToSend='Hello, world' close={hideSendTo}/>
+    </>
+  );
+
+  const openSendTo = () => {
+    setShowSendTo(true);
+  };
+
   return (
     <Router>
       <NavBar/>
-      <Backdrop show={false}/>
-      <SendTo show={false}/>
+      {showSendTo ? sendTo : null}
       <Switch>
         <Route path='/' exact component={PersonsBrowser}/>
         <Route path='/persons/' exact component={PersonsBrowser}/>
         <Route path='/persons/create' exact component={NewPersonForm}/>
         <Route path='/persons/:id/edit' exact component={NewPersonForm}/>
-        <Route path='/persons/:id' exact component={PersonCard}/>
+        <Route path='/persons/:id' exact>
+          <PersonCard openSendTo={openSendTo}/>
+        </Route>
         <Route component={NotFound}/>
       </Switch>
     </Router>

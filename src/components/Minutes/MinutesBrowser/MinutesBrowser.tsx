@@ -14,6 +14,7 @@ import styles from './MinutesBrowser.module.css';
 
 interface IOneOnOneBrowserProps {
   personId: number;
+  openSendTo: () => void;
 }
 
 const MinutesBrowser = (props: IOneOnOneBrowserProps) => {
@@ -116,6 +117,7 @@ const MinutesBrowser = (props: IOneOnOneBrowserProps) => {
       date={s.date}
       values={valuesMap}
       notesChanged={notesChanged}
+      openSendTo={props.openSendTo}
     />
   });
 
@@ -139,6 +141,7 @@ const MinutesBrowser = (props: IOneOnOneBrowserProps) => {
 
 MinutesBrowser.propTypes = {
   personId: PropTypes.number.isRequired,
+  openSendTo: PropTypes.func.isRequired,
 };
 
 export default MinutesBrowser;
