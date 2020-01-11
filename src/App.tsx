@@ -16,7 +16,7 @@ import { PersonSwitcherContext } from './contexts/PersonSwitcherContext';
 
 function App() {
   // TODO: Move into context
-  const [showSendTo, setShowSendTo] = useState(true);
+  const [showSendTo, setShowSendTo] = useState(false);
 
   const [selectedText, setSelectedText] = useState('');
 
