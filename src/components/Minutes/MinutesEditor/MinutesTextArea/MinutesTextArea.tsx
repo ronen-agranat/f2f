@@ -76,7 +76,6 @@ const MinutesTextArea = forwardRef(
         }
 
       } else if (event.key === ' ' && event.ctrlKey) {
-        console.log('In MinutesTextArea: Showing person switcher');
         if (personSwitcherContext.showPersonSwitcher) {
           personSwitcherContext.showPersonSwitcher();
         }

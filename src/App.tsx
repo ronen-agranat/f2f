@@ -40,7 +40,7 @@ function App() {
   const sendTo = (
     <>
       <Backdrop/>
-      <SendTo textToSend='Hello, world'/>
+      <SendTo textToSend={selectedText}/>
     </>
   );
 
