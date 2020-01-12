@@ -1,27 +1,36 @@
-import React, { KeyboardEvent } from 'react';
+import React, { KeyboardEvent, useContext } from 'react';
 import PropTypes from 'prop-types';
 
 import styles from './SendTo.module.css';
 import { PersonFinder } from '../PersonFinder/PersonFinder';
+import { PersonSwitcherContext } from '../../contexts/PersonSwitcherContext';
 
 interface SendToProps {
   textToSend: string;
-  close: () => void;
 }
 
 export const SendTo = (props: SendToProps) => {
+  const personSwitcherContext = useContext(PersonSwitcherContext);
+
   const personSelected = (id: number) => {
     // TODO: Add textToSend to most recent 'nextTime' minutes for user
-    props.close();
+    hidePersonSwitcher();
+  };
+
+  const hidePersonSwitcher = () => {
+    console.log('In SendTo: Hiding the person switcher');
+    if (personSwitcherContext.hidePersonSwitcher) {
+      personSwitcherContext.hidePersonSwitcher();
+    }
   };
 
   const handleKeyDown = (event: KeyboardEvent<HTMLDivElement>) => {
     switch (event.key) {
       case 'Escape':
-        props.close();
+        hidePersonSwitcher();
         break;
       case 'Enter':
-        props.close();
+        hidePersonSwitcher();
         break;
       default:
         break;
@@ -38,5 +47,4 @@ export const SendTo = (props: SendToProps) => {
 
 SendTo.propTypes = {
   textToSend: PropTypes.string.isRequired,
-  close: PropTypes.func.isRequired,
 };

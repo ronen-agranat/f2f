@@ -12,7 +12,6 @@ import { useParams } from 'react-router-dom';
 
 interface IPersonCardProps {
   personId?: number;
-  openSendTo: () => void;
 }
 
 interface IPersonParams {
@@ -50,7 +49,7 @@ const PersonCard = (props: IPersonCardProps) => {
           imageUrl={person.imageUrl}
           id={personId}
         />
-        <MinutesBrowser personId={person.id || personId} openSendTo={props.openSendTo}/>
+        <MinutesBrowser personId={person.id || personId}/>
       </>
     );
   }
@@ -59,7 +58,6 @@ const PersonCard = (props: IPersonCardProps) => {
 
 PersonCard.propTypes = {
   personId: PropTypes.number,
-  openSendTo: PropTypes.func.isRequired,
 };
 
 export default PersonCard;

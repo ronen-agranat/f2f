@@ -33,7 +33,6 @@ interface IOneOnOneMinutesProps {
     textAreaName: string,
   ) => void;
   values: Map<string, string>;
-  openSendTo: () => void;
 }
 
 // TODO: Show time since now so that you can easily say 'we met last week' or 'its been a while'
@@ -82,7 +81,6 @@ const MinutesEditor = (props: IOneOnOneMinutesProps) => {
         setCurrentNotes(textArea);
         setCurrentNotesName(textArea.name);
       }}
-      openSendTo={props.openSendTo}
     />;
   });
 
@@ -101,7 +99,6 @@ MinutesEditor.propTypes = {
   id: PropTypes.number.isRequired,
   notesChanged: PropTypes.func.isRequired,
   values: PropTypes.object.isRequired,
-  openSendTo: PropTypes.func.isRequired,
 };
 
 export default MinutesEditor;

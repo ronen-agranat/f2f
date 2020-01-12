@@ -17,7 +17,6 @@ import { PersonSwitcherContext } from './contexts/PersonSwitcherContext';
 function App() {
   // TODO: Move into context
   const [showSendTo, setShowSendTo] = useState(false);
-
   const [selectedText, setSelectedText] = useState('');
 
   const personSwitcherContextValue = {
@@ -26,23 +25,22 @@ function App() {
     // through multiple components via props
     selectedText,
     setSelectedText,
-  };
-
-  // TODO: Move into context
-  const hideSendTo = () => {
-    setShowSendTo(false);
-  };
-
-  // TODO: Move into context
-  const openSendTo = () => {
-    setShowSendTo(true);
+    showSendTo,
+    setShowSendTo,
+    // Wrap React-provided state-setters with regular functions
+    hidePersonSwitcher: () => {
+      setShowSendTo(false);
+    },
+    showPersonSwitcher: () => {
+      setShowSendTo(true);
+    },
   };
 
   // TODO: Move to dedicated component that is powered by context provider
   const sendTo = (
     <>
       <Backdrop/>
-      <SendTo textToSend='Hello, world' close={hideSendTo}/>
+      <SendTo textToSend='Hello, world'/>
     </>
   );
 
@@ -57,9 +55,7 @@ function App() {
           <Route path='/persons/' exact component={PersonsBrowser}/>
           <Route path='/persons/create' exact component={NewPersonForm}/>
           <Route path='/persons/:id/edit' exact component={NewPersonForm}/>
-          <Route path='/persons/:id' exact>
-            <PersonCard openSendTo={openSendTo}/>
-          </Route>
+          <Route path='/persons/:id' exact component={PersonCard}/>
           <Route component={NotFound}/>
         </Switch>
       </Router>

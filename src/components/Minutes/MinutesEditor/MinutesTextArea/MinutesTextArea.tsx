@@ -15,7 +15,6 @@ interface IOneOnOneProps {
   title: string;
   active: boolean;
   focused: () => void;
-  openSendTo: () => void;
 }
 
 const BULLET_CHARACTERS = ['-', '•', '*'];
@@ -33,7 +32,7 @@ const MinutesTextArea = forwardRef(
   (props: IOneOnOneProps, ref: Ref<HTMLTextAreaElement>) => {
     const [notesValue, setNotesValue] = useState(props.notes);
 
-    const { setSelectedText } = useContext(PersonSwitcherContext);
+    const personSwitcherContext = useContext(PersonSwitcherContext);
 
     const onKeyDownHandler = (event: KeyboardEvent<HTMLTextAreaElement>) => {
       if (event.key === 'Tab') {
@@ -77,7 +76,10 @@ const MinutesTextArea = forwardRef(
         }
 
       } else if (event.key === ' ' && event.ctrlKey) {
-        props.openSendTo();
+        console.log('In MinutesTextArea: Showing person switcher');
+        if (personSwitcherContext.showPersonSwitcher) {
+          personSwitcherContext.showPersonSwitcher();
+        }
       }
     };
 
@@ -122,7 +124,7 @@ const MinutesTextArea = forwardRef(
       if (ref && typeof ref === 'object') {
         if (ref.current) {
           const selectedText = ref.current.value.slice(ref.current.selectionStart, ref.current.selectionEnd);
-          setSelectedText(selectedText);
+          personSwitcherContext.setSelectedText(selectedText);
         }
       }
     };
@@ -158,7 +160,6 @@ MinutesTextArea.propTypes = {
   title: PropTypes.string.isRequired,
   active: PropTypes.bool.isRequired,
   focused: PropTypes.func.isRequired,
-  openSendTo: PropTypes.func.isRequired,
 };
 
 export default MinutesTextArea;
