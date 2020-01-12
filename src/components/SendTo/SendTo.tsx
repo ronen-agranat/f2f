@@ -19,7 +19,7 @@ export const SendTo = (props: SendToProps) => {
     // TODO: Add textToSend to most recent 'nextTime' minutes for user
     console.debug('SendTo.tsx: Sending text', props.textToSend, 'to user', id);
 
-    FaceToFace.post(`/persons/${id}/minutes/latest/follow-ups/append`, {
+    FaceToFace.post(`/persons/${id}/minutes/latest/next-time/append`, {
       textToAppend: props.textToSend,
     })
       .then(() => {
