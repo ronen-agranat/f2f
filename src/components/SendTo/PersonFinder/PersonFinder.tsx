@@ -1,4 +1,4 @@
-import React, { ChangeEvent, useEffect, useState } from 'react';
+import React, { ChangeEvent, forwardRef, Ref, useEffect, useState } from 'react';
 import PropTypes from 'prop-types';
 
 import styles from './PersonFinder.module.css';
@@ -11,7 +11,8 @@ interface PersonFinderProps {
   personSelected: (personId: number) => void;
 }
 
-export const PersonFinder = (props: PersonFinderProps) => {
+export const PersonFinder = forwardRef(
+  (props: PersonFinderProps, ref: Ref<HTMLInputElement>) => {
   const [personsLoaded, setPersonsLoaded] = useState(false);
   const [persons, setPersons] = useState<Person[]>([]);
   const [searchForName, setSearchForName] = useState('');
@@ -60,7 +61,7 @@ export const PersonFinder = (props: PersonFinderProps) => {
   return (
     <>
       <div className={styles.PersonFinder}>
-        <input type="text" value={searchForName} onChange={onChangeHandler}/>
+        <input type="text" value={searchForName} onChange={onChangeHandler} ref={ref}/>
       </div>
       {personCards.length ? (
         <div className={styles.PersonsBrowser}>{personCards}</div>
@@ -71,7 +72,7 @@ export const PersonFinder = (props: PersonFinderProps) => {
       )}
     </>
   );
-};
+  });
 
 PersonFinder.propTypes = {
   personSelected: PropTypes.func.isRequired,

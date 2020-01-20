@@ -34,6 +34,7 @@ function App() {
     showPersonSwitcher: () => {
       setShowSendTo(true);
     },
+    isPersonSwitcherVisible: showSendTo,
   };
 
   // TODO: Move to dedicated component that is powered by context provider

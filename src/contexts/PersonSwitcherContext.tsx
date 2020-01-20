@@ -7,6 +7,7 @@ type TPersonSwitcherContextValue = {
   setSelectedText: any,
   showPersonSwitcher: () => void,
   hidePersonSwitcher: () => void,
+  isPersonSwitcherVisible: boolean,
 };
 
 export const PersonSwitcherContext = React.createContext<Partial<TPersonSwitcherContextValue>>({});

@@ -1,4 +1,4 @@
-import React, { KeyboardEvent, useContext } from 'react';
+import React, { createRef, KeyboardEvent, useContext, useEffect } from 'react';
 import PropTypes from 'prop-types';
 
 import styles from './SendTo.module.css';
@@ -13,12 +13,17 @@ interface SendToProps {
 
 export const SendTo = (props: SendToProps) => {
   const personSwitcherContext = useContext(PersonSwitcherContext);
+  const ref = createRef<HTMLInputElement>();
 
+  useEffect(() => {
+    if (personSwitcherContext.isPersonSwitcherVisible) {
+      if (ref.current) {
+        ref.current.focus();
+      }
+    }
+  }, [personSwitcherContext.isPersonSwitcherVisible, ref]);
 
   const personSelected = (id: number) => {
-    // TODO: Add textToSend to most recent 'nextTime' minutes for user
-    console.debug('SendTo.tsx: Sending text', props.textToSend, 'to user', id);
-
     FaceToFace.post(`/persons/${id}/minutes/latest/next-time/append`, {
       textToAppend: props.textToSend,
     })
@@ -56,7 +61,7 @@ export const SendTo = (props: SendToProps) => {
     <p>
       Send To:
     </p>
-    <PersonFinder personSelected={personSelected}/>
+    <PersonFinder ref={ref} personSelected={personSelected}/>
   </div>;
 };
 
