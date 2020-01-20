@@ -21,7 +21,7 @@ function App() {
 
   const personSwitcherContextValue = {
     // Expose state via context to all context consumers.
-    // Enables attributes to be read and modified directly without threading
+    // Enables attributes to be read and modified directly without 'threading'
     // through multiple components via props
     selectedText,
     setSelectedText,
@@ -40,7 +40,7 @@ function App() {
   // TODO: Move to dedicated component that is powered by context provider
   const sendTo = (
     <>
-      <Backdrop/>
+      <Backdrop clicked={personSwitcherContextValue.hidePersonSwitcher}/>
       <SendTo textToSend={selectedText}/>
     </>
   );
