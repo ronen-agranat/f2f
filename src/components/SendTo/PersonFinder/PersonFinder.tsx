@@ -2,10 +2,10 @@ import React, { ChangeEvent, useEffect, useState } from 'react';
 import PropTypes from 'prop-types';
 
 import styles from './PersonFinder.module.css';
-import { Person } from '../../interfaces/person.interface';
-import FaceToFace from '../../services/FaceToFace';
+import { Person } from '../../../interfaces/person.interface';
+import FaceToFace from '../../../services/FaceToFace';
 import { AxiosError, AxiosResponse } from 'axios';
-import PersonHeader from '../Persons/PersonHeader/PersonHeader';
+import PersonHeader from '../../Persons/PersonHeader/PersonHeader';
 
 interface PersonFinderProps {
   personSelected: (personId: number) => void;

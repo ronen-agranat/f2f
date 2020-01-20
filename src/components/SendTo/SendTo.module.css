@@ -1,5 +1,5 @@
 .SendTo {
-  position: absolute;
+  position: fixed;
   top: 120px;
   left: 50%;
   transform: translate(-50%, 0%);

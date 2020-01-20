@@ -2,7 +2,7 @@ import React, { KeyboardEvent, useContext } from 'react';
 import PropTypes from 'prop-types';
 
 import styles from './SendTo.module.css';
-import { PersonFinder } from '../PersonFinder/PersonFinder';
+import { PersonFinder } from './PersonFinder/PersonFinder';
 import { PersonSwitcherContext } from '../../contexts/PersonSwitcherContext';
 import FaceToFace from '../../services/FaceToFace';
 import { AxiosError } from 'axios';
@@ -25,10 +25,9 @@ export const SendTo = (props: SendToProps) => {
       .then(() => {
         // TODO update some kind of dirty flag / 'saved' indicator
         // TODO: Show a toast 'success' message
-        console.debug('SendTo.tsx: Sending text', props.textToSend, 'to user', id);
       })
       .catch((error: AxiosError) => {
-        console.error('SendTo.tsx: Something went wrong with updating the minutes', error);
+        // TODO: Handle error
       });
 
     hidePersonSwitcher();
