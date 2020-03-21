@@ -24,6 +24,7 @@ const PersonCard = (props: IPersonCardProps) => {
   const personId = params.id ? Number(params.id) : props.personId;
   const [person, setPersonState] = useState<Person | undefined>();
   const [personLoaded, setPersonLoaded] = useState(false);
+  const [error, setError] = useState('');
 
   useEffect(() => {
     if (!personLoaded) {
@@ -33,14 +34,18 @@ const PersonCard = (props: IPersonCardProps) => {
           setPersonLoaded(true);
         })
         .catch((error: AxiosError) => {
-          console.error('Something went wrong with fetching data', error);
+          if (error.response && error.response.status === 404) {
+            setError(error.response.data.message);
+          }
         });
     }
   }, [personLoaded, personId]);
 
   let personContent = null;
 
-  if (personId && person) {
+  if (error) {
+    personContent = <p className={styles.Error}>{error}</p>;
+  } else if (personId && person) {
     personContent = (
       <>
         <PersonHeader
