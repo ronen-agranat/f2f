@@ -10,11 +10,13 @@ import { Person } from '../../../interfaces/person.interface';
 interface INewPersonFormValues {
   name?: string | undefined;
   role?: string | undefined;
+  phone?: string | undefined;
 }
 
 interface INewPersonFormErrors {
   name?: string | undefined;
   role?: string | undefined;
+  phone?: string | undefined;
 }
 
 interface IPersonParams {
@@ -33,6 +35,7 @@ const NewPersonForm = () => {
     name: '',
     role: '',
     imageUrl: '',
+    phone: '',
   });
   const [personLoaded, setPersonLoaded] = useState(false);
 
@@ -54,13 +57,16 @@ const NewPersonForm = () => {
       {/* TODO show loading message */}
       {editMode && !personLoaded ? null :
         <Formik
-          initialValues={{ name: person.name, role: person.role, imageUrl: person.imageUrl }}
+          initialValues={{ name: person.name, role: person.role, imageUrl: person.imageUrl, phone: person.phone }}
           validate={(values: INewPersonFormValues): INewPersonFormErrors => {
             const errors: INewPersonFormErrors = {};
             if (!values.name) {
               errors.name = 'Name is required';
             }
             if (!values.role) {
+              errors.role = 'Role is required';
+            }
+            if (!values.phone) {
               errors.role = 'Role is required';
             }
 
@@ -74,6 +80,7 @@ const NewPersonForm = () => {
             submitMethod(path, {
               name: values.name,
               role: values.role,
+              phone: values.phone,
               imageUrl: 'https://picsum.photos/200/300',
             })
               .then((response: AxiosResponse) => {
@@ -122,6 +129,16 @@ const NewPersonForm = () => {
                   </label>
                   <Field name="role"/>
                   <ErrorMessage name="role" component="div"/>
+                </p>
+                <p>
+                  <label htmlFor="phone">
+                    <span>Phone:&nbsp;</span>
+                    <strong>
+                      <abbr title="required">*</abbr>&nbsp;
+                    </strong>
+                  </label>
+                  <Field name="phone"/>
+                  <ErrorMessage name="phone" component="div"/>
                 </p>
               </section>
               <div>
