@@ -75,12 +75,6 @@ const NewPersonForm = () => {
             if (!values.role) {
               errors.role = 'Role is required';
             }
-            if (!values.phone) {
-              errors.phone = 'Phone is required';
-            }
-            if (!values.team) {
-              errors.team = 'Team is required';
-            }
 
             return errors;
           }}
@@ -147,9 +141,6 @@ const NewPersonForm = () => {
                 <p>
                   <label htmlFor="phone">
                     <span>Phone:&nbsp;</span>
-                    <strong>
-                      <abbr title="required">*</abbr>&nbsp;
-                    </strong>
                   </label>
                   <Field name="phone"/>
                   <ErrorMessage name="phone" component="div"/>
@@ -157,9 +148,6 @@ const NewPersonForm = () => {
                 <p>
                   <label htmlFor="team">
                     <span>Team:&nbsp;</span>
-                    <strong>
-                      <abbr title="required">*</abbr>&nbsp;
-                    </strong>
                   </label>
                   <Field name="team"/>
                   <ErrorMessage name="team" component="div"/>
