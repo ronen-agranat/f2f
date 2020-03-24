@@ -11,12 +11,14 @@ interface INewPersonFormValues {
   name?: string | undefined;
   role?: string | undefined;
   phone?: string | undefined;
+  team?: string | undefined;
 }
 
 interface INewPersonFormErrors {
   name?: string | undefined;
   role?: string | undefined;
   phone?: string | undefined;
+  team?: string | undefined;
 }
 
 interface IPersonParams {
@@ -36,6 +38,7 @@ const NewPersonForm = () => {
     role: '',
     imageUrl: '',
     phone: '',
+    team: '',
   });
   const [personLoaded, setPersonLoaded] = useState(false);
 
@@ -57,7 +60,13 @@ const NewPersonForm = () => {
       {/* TODO show loading message */}
       {editMode && !personLoaded ? null :
         <Formik
-          initialValues={{ name: person.name, role: person.role, imageUrl: person.imageUrl, phone: person.phone }}
+          initialValues={{
+            name: person.name,
+            role: person.role,
+            imageUrl: person.imageUrl,
+            phone: person.phone,
+            team: person.team,
+          }}
           validate={(values: INewPersonFormValues): INewPersonFormErrors => {
             const errors: INewPersonFormErrors = {};
             if (!values.name) {
@@ -67,7 +76,10 @@ const NewPersonForm = () => {
               errors.role = 'Role is required';
             }
             if (!values.phone) {
-              errors.role = 'Role is required';
+              errors.phone = 'Phone is required';
+            }
+            if (!values.team) {
+              errors.team = 'Team is required';
             }
 
             return errors;
@@ -78,9 +90,11 @@ const NewPersonForm = () => {
             const submitMethod = editMode ? FaceToFace.put : FaceToFace.post;
             const path = editMode ? `/persons/${person.id}` : `/persons/`;
             submitMethod(path, {
+              // TODO: Need to touch every time adding new fields; not DRY
               name: values.name,
               role: values.role,
               phone: values.phone,
+              team: values.team,
               imageUrl: 'https://picsum.photos/200/300',
             })
               .then((response: AxiosResponse) => {
@@ -139,6 +153,16 @@ const NewPersonForm = () => {
                   </label>
                   <Field name="phone"/>
                   <ErrorMessage name="phone" component="div"/>
+                </p>
+                <p>
+                  <label htmlFor="team">
+                    <span>Team:&nbsp;</span>
+                    <strong>
+                      <abbr title="required">*</abbr>&nbsp;
+                    </strong>
+                  </label>
+                  <Field name="team"/>
+                  <ErrorMessage name="team" component="div"/>
                 </p>
               </section>
               <div>

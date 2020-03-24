@@ -4,4 +4,5 @@ export interface Person {
   name?: string;
   imageUrl?: string;
   phone?: string;
+  team?: string;
 }
