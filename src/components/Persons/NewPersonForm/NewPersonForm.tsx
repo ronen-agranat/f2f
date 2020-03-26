@@ -7,18 +7,22 @@ import FaceToFace from '../../../services/FaceToFace';
 import { AxiosError, AxiosResponse } from 'axios';
 import { Person } from '../../../interfaces/person.interface';
 
+// TODO: Touchpoint for adding fields; not DRY
 interface INewPersonFormValues {
   name?: string | undefined;
   role?: string | undefined;
   phone?: string | undefined;
   team?: string | undefined;
+  imageUrl?: string | undefined;
 }
 
+// TODO: Touchpoint for adding fields; not DRY
 interface INewPersonFormErrors {
   name?: string | undefined;
   role?: string | undefined;
   phone?: string | undefined;
   team?: string | undefined;
+  imageUrl?: string | undefined;
 }
 
 interface IPersonParams {
@@ -32,6 +36,7 @@ const NewPersonForm = () => {
   const editMode = Boolean(params.id);
 
   const personId = Number(params.id);
+  // TODO: Touchpoint for adding fields; not DRY
   const [person, setPersonState] = useState<Person>({
     id: -1,
     name: '',
@@ -58,6 +63,7 @@ const NewPersonForm = () => {
   return (
     <div className={styles.NewPersonForm}>
       {/* TODO show loading message */}
+      {/* TODO Touchpoint for adding fields */}
       {editMode && !personLoaded ? null :
         <Formik
           initialValues={{
@@ -151,6 +157,13 @@ const NewPersonForm = () => {
                   </label>
                   <Field name="team"/>
                   <ErrorMessage name="team" component="div"/>
+                </p>
+                <p>
+                  <label htmlFor="imageUrl">
+                    <span>Image URL:&nbsp;</span>
+                  </label>
+                  <Field name="imageUrl"/>
+                  <ErrorMessage name="imageUrl" component="div"/>
                 </p>
               </section>
               <div>
