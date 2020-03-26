@@ -32,17 +32,21 @@ const PersonsBrowser = () => {
     setPersons(newPersons);
   };
 
-  const personCards = persons.map(person => (
-    <PersonHeader
-      imageUrl={person.imageUrl}
-      role={person.role}
-      name={person.name}
-      key={person.id}
-      id={person.id}
-      showDeletePerson={true}
-      personDeleted={personDeleted}
-    />
-  ));
+  const personCards = persons
+    .sort((a, b) => {
+      return (a.name || '') <= (b.name || '') ? -1 : 1;
+    })
+    .map(person => (
+      <PersonHeader
+        imageUrl={person.imageUrl}
+        role={person.role}
+        name={person.name}
+        key={person.id}
+        id={person.id}
+        showDeletePerson={true}
+        personDeleted={personDeleted}
+      />
+    ));
 
   return (
     <>
