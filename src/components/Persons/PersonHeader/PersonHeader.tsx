@@ -42,6 +42,16 @@ const PersonHeader = (props: IPersonHeaderProps) => {
     </div>
   ) : null;
 
+  const editPersonButton = (
+    <span className={styles.EditPersonButton}>
+      <Link to={`/persons/${props.id}/edit`}>Edit person</Link>
+    </span>
+  );
+
+  const profilePic = Boolean(props.imageUrl) ? (
+    <img src={props.imageUrl} alt={''} className={styles.ProfileImg}/>
+  ) : null;
+
   const clickHandler = () => {
     if (props.clicked) {
       props.clicked(props.id);
@@ -50,10 +60,8 @@ const PersonHeader = (props: IPersonHeaderProps) => {
 
   return (
     <div className={styles.PersonHeader} onClick={clickHandler}>
-      <div className={styles.title}>
-        {/*Boolean(props.imageUrl) ? (
-          <img src={props.imageUrl} alt={imageAltText}/>
-        ) : null*/}
+      {profilePic}
+      <div className={styles.PersonKeyFacts}>
         <div className={styles.title__name}>
           <Link to={`/persons/${props.id}`}>
             {Boolean(props.name) ? <div>{props.name}</div> : null}
@@ -62,9 +70,7 @@ const PersonHeader = (props: IPersonHeaderProps) => {
         {Boolean(props.role) ? <div>{props.role}</div> : null}
       </div>
       <div>
-        <span className={styles.EditPersonButton}>
-          <Link to={`/persons/${props.id}/edit`}>Edit person</Link>
-        </span>
+        {editPersonButton}
         &nbsp;
         {deletePersonButton}
       </div>
