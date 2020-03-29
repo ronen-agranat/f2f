@@ -95,7 +95,7 @@ const NewPersonForm = () => {
               role: values.role,
               phone: values.phone,
               team: values.team,
-              imageUrl: 'https://picsum.photos/200/300',
+              imageUrl: values.imageUrl,
             })
               .then((response: AxiosResponse) => {
                 console.log('Got create person response', response);
