@@ -35,13 +35,13 @@
 }
 
 .ProfileImg {
-  width: 30px;
-  height: 30px;
+  width: 42px;
+  height: 42px;
   vertical-align: middle;
-  border: solid white 2px;
   display: block;
   border-radius: 50%;
-  border: 1px solid #111111;
+  border: 1px solid #ebebeb;
+  padding: 3px;
 }
 
 .EditPersonButton a,
