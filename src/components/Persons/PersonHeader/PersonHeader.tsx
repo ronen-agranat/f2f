@@ -49,7 +49,9 @@ const PersonHeader = (props: IPersonHeaderProps) => {
   );
 
   const profilePic = Boolean(props.imageUrl) ? (
-    <img src={props.imageUrl} alt={''} className={styles.ProfileImg}/>
+    <Link to={`/persons/${props.id}`}>
+      <img src={props.imageUrl} alt={''} className={styles.ProfileImg}/>
+    </Link>
   ) : null;
 
   const clickHandler = () => {
