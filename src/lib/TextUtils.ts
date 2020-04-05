@@ -93,7 +93,11 @@ export const parseInputText = (text: string): [string, number, boolean] => {
 
   // If last character was new line
   let addedIndent = false;
-  if (lastChar === '\n') {
+
+  // Don't add a bullet if the last line was just a bullet
+  let lastLineJustBullet = previousLine.endsWith('- ');
+
+  if (lastChar === '\n' && !lastLineJustBullet) {
     if (previousLineIndentLevel > 0) {
       newText = newText.concat(' '.repeat(previousLineIndentLevel));
       addedIndent = true;
