@@ -1,3 +1,26 @@
+# Face-to-face front-end server
+
+> Have great conversations
+
+A web app for taking notes, action items and follow-ups during 1-1 meetings.
+
+### Features
+
+- Plain-text note taking with keyboard shortcuts
+- Simple so you can take notes faster
+- Each conversation pulls up previous follow-up items
+- Cross-reference action items in other peoples' one-on-ones
+- Or assign action items to your own agenda
+- Person switcher
+
+### Technology
+
+- React and TypeScript for front-end (`f2f` repo)
+- NestJS and TypeScript for back-end and ORM (`f2f-server` repo)
+- MySQL for data-store (old habits die hard; I'd rather to DB ops on a platform I'm very familiar with)
+
+# Create react app
+
 This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
 
 ## Available Scripts
