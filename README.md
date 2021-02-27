@@ -19,6 +19,15 @@ A web app for taking notes, action items and follow-ups during 1-1 meetings.
 - NestJS and TypeScript for back-end and ORM (`f2f-server` repo)
 - MySQL for data-store (old habits die hard; I'd rather to DB ops on a platform I'm very familiar with)
 
+## Getting started
+
+Both the server and client applications have environment variables which must be set.
+
+*Note that React application environment variables **must** begin with `REACT_APP_` by design*.
+Otherwise, the environment variable will be invisible to your application via `process.env`
+
+`REACT_APP_F2F_SERVER_ENDPOINT`: URL of the F2F server API; defaults to localhost:3001
+
 # Create react app
 
 This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
