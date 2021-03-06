@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, { useContext } from 'react';
 import { Formik, Form, Field, ErrorMessage } from 'formik';
 import { useHistory, useParams } from 'react-router-dom';
 
@@ -6,6 +6,7 @@ import FaceToFace from '../../services/FaceToFace';
 import { AxiosError, AxiosResponse } from 'axios';
 
 import styles from './LoginForm.module.css';
+import { UserContext } from '../../contexts/UserContext';
 
 // TODO: Touchpoint for adding fields; not DRY
 interface LoginFormValues {
@@ -21,6 +22,8 @@ interface LoginFormErrors {
 
 export const LoginForm = () => {
   let history = useHistory();
+
+  const userContext = useContext(UserContext);
 
   return (
     <div className={styles.LoginForm}>
@@ -49,8 +52,15 @@ export const LoginForm = () => {
             password: values.password,
           })
             .then((response: AxiosResponse) => {
-              console.debug('Got auth response', response);
+              // Most important part: extract and store bearer token into application state
+              const bearerToken = response!.data!.access_token;
+              // TODO: How can setBearerToken be undefined?
+              if (userContext.setBearerToken) {
+                userContext.setBearerToken(bearerToken);
+              }
+              // Tell Formik that we are done
               setSubmitting(false);
+              // Navigate to root page
               history.push('/');
             })
             .catch((error: AxiosError) => {
