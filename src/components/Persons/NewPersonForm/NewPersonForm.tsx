@@ -1,3 +1,20 @@
+/////////////////////////////////////////////////////////////////////
+//
+// NewPersonForm
+//
+// Form that allows creation as well as editing of persons.
+//
+// New mode:
+//   - Blank form is shown allowing for creation.
+//   - Changes are submitted with POST
+//
+// Edit mode:
+//   - Existing values are queried and shown on the form for editing
+//   - Changes are submitted with PUT
+//
+// Uses Formik for form handling.
+//
+
 import React, { useEffect, useState } from 'react';
 import { Formik, Form, Field, ErrorMessage } from 'formik';
 import { useHistory, useParams } from 'react-router-dom';
@@ -45,6 +62,8 @@ const NewPersonForm = () => {
     phone: '',
     team: '',
   });
+
+  // If in edit mode, person needs to be loaded first
   const [personLoaded, setPersonLoaded] = useState(false);
 
   useEffect(() => {
@@ -98,7 +117,7 @@ const NewPersonForm = () => {
               imageUrl: values.imageUrl,
             })
               .then((response: AxiosResponse) => {
-                console.log('Got create person response', response);
+                console.debug('Got create person response', response);
                 // TODO Check id of added person and navigate there
                 setSubmitting(false);
                 history.push('/persons/');

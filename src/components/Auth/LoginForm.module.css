@@ -1,3 +1,107 @@
 .LoginForm {
-    border: 1px black solid;
+  margin: 5px;
+  padding: 5px;
+}
+
+.LoginForm h3 {
+  margin-top: 3px;
+  margin-bottom: 15px;
+}
+
+.LoginForm h2 {
+  margin-top: 0;
+}
+
+.LoginForm ul {
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.LoginForm form {
+  margin: 0 auto;
+  width: 400px;
+  padding: 1em;
+  border: 1px solid #CCC;
+  border-radius: 1em;
+}
+
+.LoginForm div + div {
+  margin-top: 1em;
+}
+
+.LoginForm label span {
+  display: inline-block;
+  width: 120px;
+  text-align: right;
+}
+
+.LoginForm input, textarea {
+  font: 1em sans-serif;
+  width: 250px;
+  height: 2em;
+  box-sizing: border-box;
+  border: 1px solid #999;
+  padding: 5px;
+}
+
+.LoginForm input[type=checkbox], input[type=radio] {
+  width: auto;
+  border: none;
+}
+
+.LoginForm input:focus, textarea:focus {
+  border-color: #000;
+}
+
+.LoginForm textarea {
+  vertical-align: top;
+  height: 5em;
+  resize: vertical;
+}
+
+.LoginForm fieldset {
+  width: 250px;
+  box-sizing: border-box;
+  margin-left: 136px;
+  border: 1px solid #999;
+}
+
+.LoginForm button {
+  display: block;
+  background-color: #17cf52;
+  padding: 10px;
+  width: 9em;
+  text-align: center;
+  border-radius: 10px;
+  color: #111111;
+  text-decoration: none;
+  font-size: 11pt;
+  margin: 0 auto;
+}
+
+.LoginForm button:hover {
+  cursor: pointer;
+}
+
+.LoginForm label {
+  position: relative;
+}
+
+.LoginForm label em {
+  position: absolute;
+  right: 5px;
+  top: 20px;
+}
+
+.LoginForm label {
+  margin-right: 3px;
+}
+
+.LoginForm input + div {
+  color: red;
+  text-align: right;
+  font-size: 9pt;
+  margin-top: 2px;
+  margin-right: 1.5em;
 }
