@@ -17,7 +17,7 @@ A web app for taking notes, action items and follow-ups during 1-1 meetings.
 
 - React and TypeScript for front-end (`f2f` repo)
 - NestJS and TypeScript for back-end and ORM (`f2f-server` repo)
-- MySQL for data-store (old habits die hard; I'd rather to DB ops on a platform I'm very familiar with)
+- MySQL for data-store (old habits die hard; I'd rather do DB ops on a platform I'm very familiar with)
 
 ## Getting started
 
@@ -27,6 +27,25 @@ Both the server and client applications have environment variables which must be
 Otherwise, the environment variable will be invisible to your application via `process.env`
 
 `REACT_APP_F2F_SERVER_ENDPOINT`: URL of the F2F server API; defaults to localhost:3001
+
+## Cloud
+
+The application is hosted via AWS Amplify. Configure it as follows:
+
+Reference: https://aws.amazon.com/getting-started/hands-on/build-react-app-amplify-graphql/module-one/
+
+* Navigate to AWS Amplify console: https://console.aws.amazon.com
+* Chose 'Deploy - Get Started'
+* Connect to GitHub repository and authorise AWS Amplify with GitHub
+* Choose app name: f2f
+* Expand 'Advanced Settings' and enter environment variables:
+    * REACT_APP_F2F_SERVER_ENDPOINT: This should correspond with the endpoint of your Lambda deployment of f2f-server; see f2f-server README.md for more info
+    * Specifying these via environment variables enables you to create different isolated environments, such as dev, test, production and so forth
+* Save and deploy
+* Watch as pipeline progresses through to a verified deployment; takes but a moment.
+* The endpoint is then displayed on the same screen; e.g. `https://master.dlv3ov0xpf9yl.amplifyapp.com/`
+
+At this point, the app should be working and accessible in your web browser.
 
 # Create react app
 

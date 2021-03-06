@@ -13,8 +13,14 @@ import { NotFound } from './components/ErrorPages/NotFound/NotFound';
 import { Backdrop } from './components/UI/Backdrop/Backdrop';
 import { SendTo } from './components/SendTo/SendTo';
 import { PersonSwitcherContext } from './contexts/PersonSwitcherContext';
+import { LoginForm } from './components/Auth/LoginForm';
 
 function App() {
+  // Authentication
+  const [bearerToken, setBearerToken] = useState('');
+
+  // Person switcher
+
   // TODO: Move into context
   const [showSendTo, setShowSendTo] = useState(false);
   const [selectedText, setSelectedText] = useState('');
@@ -45,6 +51,11 @@ function App() {
     </>
   );
 
+  if (!Boolean(bearerToken)) {
+    console.log('Bearer token is not set');
+  }
+
+  // Outermost application
   return (
     <PersonSwitcherContext.Provider value={personSwitcherContextValue}>
       <Router>
@@ -52,6 +63,7 @@ function App() {
         {/* Move into component that is powered by context provider */}
         {showSendTo ? sendTo : null}
         <Switch>
+          { !Boolean(bearerToken) ? <Route component={LoginForm}/> : null }
           <Route path='/' exact component={PersonsBrowser}/>
           <Route path='/persons/' exact component={PersonsBrowser}/>
           <Route path='/persons/create' exact component={NewPersonForm}/>
