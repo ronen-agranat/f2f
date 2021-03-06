@@ -5,8 +5,6 @@ import { useHistory, useParams } from 'react-router-dom';
 import FaceToFace from '../../services/FaceToFace';
 import { AxiosError, AxiosResponse } from 'axios';
 
-import { User } from '../../interfaces/user.interface';
-
 import styles from './LoginForm.module.css';
 
 // TODO: Touchpoint for adding fields; not DRY
