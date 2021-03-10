@@ -21,12 +21,27 @@ A web app for taking notes, action items and follow-ups during 1-1 meetings.
 
 ## Getting started
 
-Both the server and client applications have environment variables which must be set.
+### Install NodeJS
 
-*Note that React application environment variables **must** begin with `REACT_APP_` by design*.
-Otherwise, the environment variable will be invisible to your application via `process.env`
+https://nodejs.org/en/download/
 
-`REACT_APP_F2F_SERVER_ENDPOINT`: URL of the F2F server API; defaults to localhost:3001
+### Install packages
+
+    $ npm install
+
+### Set up environment
+
+Point to your f2f-server application
+
+    $ export REACT_APP_F2F_SERVER_ENDPOINT=<f2f_server_endpoint>
+
+(defaults to localhost:3001)
+
+### Start app
+
+Ensure `f2f-server` is running. Then issue:
+
+    $ npm run start
 
 ## Cloud
 

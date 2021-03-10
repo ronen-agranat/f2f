@@ -1,41 +1,43 @@
 import React, { useContext } from 'react';
 import { Formik, Form, Field, ErrorMessage } from 'formik';
-import { Link, useHistory, useParams } from 'react-router-dom';
+import { useHistory, useParams } from 'react-router-dom';
 
 import FaceToFace from '../../services/FaceToFace';
 import { AxiosError, AxiosResponse } from 'axios';
 
-import styles from './LoginForm.module.css';
-import { UserContext } from '../../contexts/UserContext';
+import styles from './CreateUserForm.module.css';
 
 // TODO: Touchpoint for adding fields; not DRY
-interface LoginFormValues {
+interface CreateUserFormValues {
   username?: string | undefined;
   password?: string | undefined;
+  name?: string | undefined;
+  email?: string | undefined;
+  imageUrl?: string | undefined;
+  phone?: string | undefined;
 }
 
 // TODO: Touchpoint for adding fields; not DRY
-interface LoginFormErrors {
+interface CreateUserFormErrors {
   username?: string | undefined;
   password?: string | undefined;
+  name?: string | undefined;
+  email?: string | undefined;
+  imageUrl?: string | undefined;
+  phone?: string | undefined;
 }
 
-export const LoginForm = () => {
+export const CreateUserForm = () => {
   let history = useHistory();
-
-  const userContext = useContext(UserContext);
-
   return (
-    <div className={styles.LoginForm}>
-      {/* TODO show loading message */}
-      {/* TODO Touchpoint for adding fields */}
+    <div className={styles.CreateUserForm}>
       <Formik
         initialValues={{
           username: '',
           password: '',
         }}
-        validate={(values: LoginFormValues): LoginFormErrors => {
-          const errors: LoginFormErrors = {};
+        validate={(values: CreateUserFormValues): CreateUserFormErrors => {
+          const errors: CreateUserFormErrors = {};
           if (!values.username) {
             errors.username = 'Username is required';
           }
@@ -45,26 +47,24 @@ export const LoginForm = () => {
 
           return errors;
         }}
-        onSubmit={(values: LoginFormValues, { setSubmitting }) => {
-          FaceToFace.post('/auth/login', {
-            // TODO: Need to touch every time adding new fields; not DRY
+        onSubmit={(values: CreateUserFormValues, { setSubmitting }) => {
+          FaceToFace.post('/users', {
             username: values.username,
             password: values.password,
+            name: values.name,
+            email: values.email,
+            imageUrl: values.imageUrl,
+            phone: values.phone
           })
             .then((response: AxiosResponse) => {
-              // Most important part: extract and store bearer token into application state
-              const bearerToken = response!.data!.access_token;
-              // TODO: How can setBearerToken be undefined?
-              if (userContext.setBearerToken) {
-                userContext.setBearerToken(bearerToken);
-              }
+              console.debug('Got create user response', response);
               // Tell Formik that we are done
               setSubmitting(false);
               // Navigate to root page
               history.push('/');
             })
             .catch((error: AxiosError) => {
-              console.error('Something went wrong creating person', error);
+              console.error('Something went wrong creating user', error);
               setSubmitting(false);
             });
         }}
@@ -72,7 +72,7 @@ export const LoginForm = () => {
         {({ isSubmitting }) => (
           <Form>
             <h2>
-              {'Welcome! Please login to your account'}
+              {'Create new account'}
             </h2>
             <p>
               Required fields are followed by{' '}
@@ -105,14 +105,41 @@ export const LoginForm = () => {
                 <ErrorMessage name="password" component="div" />
               </p>
             </section>
+            <section>
+              <h3>Personal information</h3>
+              <p>
+                <label htmlFor="name">
+                  <span>Name:&nbsp;</span>
+                  <strong>
+                    <abbr title="required">*</abbr>&nbsp;
+                      </strong>
+                </label>
+                <Field name="name" />
+                {/*TODO div cannot appear within p*/}
+                <ErrorMessage name="name" component="div" />
+              </p>
+              <p>
+                <label htmlFor="email">
+                  <span>Email:&nbsp;</span>
+                  <strong>
+                    <abbr title="required">*</abbr>&nbsp;
+                  </strong>
+                </label>
+                <Field name="email"/>
+                <ErrorMessage name="email" component="div" />
+              </p>
+              <p>
+                <label htmlFor="phone">
+                  <span>Phone:&nbsp;</span>
+                </label>
+                <Field name="phone"/>
+                <ErrorMessage name="phone" component="div" />
+              </p>
+            </section>
             <div>
               <button type="submit" disabled={isSubmitting}>
-                {'Login'}
+                {'Create account'}
               </button>
-
-              <Link to={`/users/create`}>
-                Create a new account
-              </Link>
             </div>
           </Form>
         )}

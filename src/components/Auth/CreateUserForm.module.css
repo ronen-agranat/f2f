@@ -1,0 +1,108 @@
+.CreateUserForm {
+    margin: 5px;
+    padding: 5px;
+  }
+  
+  .CreateUserForm h3 {
+    margin-top: 3px;
+    margin-bottom: 15px;
+  }
+  
+  .CreateUserForm h2 {
+    margin-top: 0;
+  }
+  
+  .CreateUserForm ul {
+    margin: 0;
+    padding: 0;
+    list-style: none;
+  }
+  
+  .CreateUserForm form {
+    margin: 0 auto;
+    width: 400px;
+    padding: 1em;
+    border: 1px solid #CCC;
+    border-radius: 1em;
+  }
+  
+  .CreateUserForm div + div {
+    margin-top: 1em;
+  }
+  
+  .CreateUserForm label span {
+    display: inline-block;
+    width: 120px;
+    text-align: right;
+  }
+  
+  .CreateUserForm input, textarea {
+    font: 1em sans-serif;
+    width: 250px;
+    height: 2em;
+    box-sizing: border-box;
+    border: 1px solid #999;
+    padding: 5px;
+  }
+  
+  .CreateUserForm input[type=checkbox], input[type=radio] {
+    width: auto;
+    border: none;
+  }
+  
+  .CreateUserForm input:focus, textarea:focus {
+    border-color: #000;
+  }
+  
+  .CreateUserForm textarea {
+    vertical-align: top;
+    height: 5em;
+    resize: vertical;
+  }
+  
+  .CreateUserForm fieldset {
+    width: 250px;
+    box-sizing: border-box;
+    margin-left: 136px;
+    border: 1px solid #999;
+  }
+  
+  .CreateUserForm button {
+    display: block;
+    background-color: #17cf52;
+    padding: 10px;
+    width: 9em;
+    text-align: center;
+    border-radius: 10px;
+    color: #111111;
+    text-decoration: none;
+    font-size: 11pt;
+    margin: 0 auto;
+  }
+  
+  .CreateUserForm button:hover {
+    cursor: pointer;
+  }
+  
+  .CreateUserForm label {
+    position: relative;
+  }
+  
+  .CreateUserForm label em {
+    position: absolute;
+    right: 5px;
+    top: 20px;
+  }
+  
+  .CreateUserForm label {
+    margin-right: 3px;
+  }
+  
+  .CreateUserForm input + div {
+    color: red;
+    text-align: right;
+    font-size: 9pt;
+    margin-top: 2px;
+    margin-right: 1.5em;
+  }
+  

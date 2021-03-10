@@ -15,6 +15,7 @@ import { SendTo } from './components/SendTo/SendTo';
 import { PersonSwitcherContext } from './contexts/PersonSwitcherContext';
 import { UserContext } from './contexts/UserContext';
 import { LoginForm } from './components/Auth/LoginForm';
+import { CreateUserForm } from './components/Auth/CreateUserForm';
 
 function App() {
   // Authentication
@@ -61,24 +62,35 @@ function App() {
     console.log('Bearer token is not set');
   }
 
+  const isAuthenticated = Boolean(bearerToken);
+
+  const authenticatedRouter = <Router>
+    <NavBar />
+    {/* Move into component that is powered by context provider */}
+    {showSendTo ? sendTo : null}
+    <Switch>
+      <Route path='/' exact component={PersonsBrowser} />
+      <Route path='/persons/' exact component={PersonsBrowser} />
+      <Route path='/persons/create' exact component={NewPersonForm} />
+      <Route path='/persons/:id/edit' exact component={NewPersonForm} />
+      <Route path='/persons/:id' exact component={PersonCard} />
+      <Route path='/users/create' exact component={CreateUserForm} />
+      <Route component={NotFound} />
+    </Switch>
+  </Router>;
+  
+  const unauthenticatedRouter = <Router>
+    <Switch>
+      <Route path='/users/create' exact component={CreateUserForm} />
+      <Route component={LoginForm} />
+    </Switch>
+  </Router>;
+
   // Outermost application
   return (
     <PersonSwitcherContext.Provider value={personSwitcherContextValue}>
       <UserContext.Provider value={userContextValue}>
-        <Router>
-          <NavBar/>
-          {/* Move into component that is powered by context provider */}
-          {showSendTo ? sendTo : null}
-          <Switch>
-            { !Boolean(bearerToken) ? <Route component={LoginForm}/> : null }
-            <Route path='/' exact component={PersonsBrowser}/>
-            <Route path='/persons/' exact component={PersonsBrowser}/>
-            <Route path='/persons/create' exact component={NewPersonForm}/>
-            <Route path='/persons/:id/edit' exact component={NewPersonForm}/>
-            <Route path='/persons/:id' exact component={PersonCard}/>
-            <Route component={NotFound}/>
-          </Switch>
-        </Router>
+        { isAuthenticated ? authenticatedRouter : unauthenticatedRouter }
       </UserContext.Provider>
     </PersonSwitcherContext.Provider>
   );
