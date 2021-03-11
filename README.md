@@ -33,9 +33,7 @@ https://nodejs.org/en/download/
 
 Point to your f2f-server application
 
-    $ export REACT_APP_F2F_SERVER_ENDPOINT=<f2f_server_endpoint>
-
-(defaults to localhost:3001)
+    $ export REACT_APP_F2F_SERVER_ENDPOINT=http://localhost:3001
 
 ### Start app
 
