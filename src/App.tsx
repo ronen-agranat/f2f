@@ -55,6 +55,7 @@ function App() {
 
   // User context; see ./contexts/UserContext.tsx
   const userContextValue = {
+    bearerToken,
     setBearerToken
   }
 

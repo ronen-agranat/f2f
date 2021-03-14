@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, { useContext, useEffect, useState } from 'react';
 
 import styles from './PersonsBrowser.module.css';
 import FaceToFace from '../../services/FaceToFace';
@@ -6,23 +6,41 @@ import { AxiosError, AxiosResponse } from 'axios';
 import { Person } from '../../interfaces/person.interface';
 import PersonHeader from '../Persons/PersonHeader/PersonHeader';
 import { AddPersonButton } from './AddPersonButton/AddPersonButton';
+import { UserContext } from '../../contexts/UserContext';
 
 const PersonsBrowser = () => {
   const [personsLoaded, setPersonsLoaded] = useState(false);
   const [persons, setPersons] = useState<Person[]>([]);
+  const [error, setError] = useState<string>();
+  const userContext = useContext(UserContext);
 
   useEffect(() => {
     if (!personsLoaded) {
-      FaceToFace.get(`/persons/`)
+      FaceToFace.get(`/persons/`, { headers: { Authorization: `Bearer ${userContext.bearerToken}`}})
         .then((response: AxiosResponse<Person[]>) => {
           setPersons(response.data);
           setPersonsLoaded(true);
         })
         .catch((error: AxiosError) => {
           console.error('Something went wrong with fetching data', error);
+          setError(`Could not retrieve person list: ${error.message}`);
         });
     }
-  }, [personsLoaded]);
+  }, [personsLoaded, userContext.bearerToken]);
+
+  if (!personsLoaded && !error) {
+    return <p>
+      <i>Loading...</i>
+    </p>;
+  }
+
+  if (error) {
+    return <p>
+      <strong style={{color: 'red'}}>
+        {`Error occured: ${error}`}
+      </strong>
+    </p>
+  }
 
   const personDeleted = (id: number) => {
     // Update local persons state when person deleted
@@ -50,7 +68,7 @@ const PersonsBrowser = () => {
 
   return (
     <>
-      <div className={styles.PersonsBrowser}>{personCards}</div>
+      { Boolean(persons.length) ? <div className={styles.PersonsBrowser}>{personCards}</div> : <i>No people added yet -- add the first below.</i> }
       <AddPersonButton/>
     </>
   );

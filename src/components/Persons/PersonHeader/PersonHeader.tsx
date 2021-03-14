@@ -1,8 +1,9 @@
-import React, { useCallback } from 'react';
+import React, { useCallback, useContext } from 'react';
 import PropTypes from 'prop-types';
 import styles from './PersonHeader.module.css';
 import { Link } from 'react-router-dom';
 import FaceToFace from '../../../services/FaceToFace';
+import { UserContext } from '../../../contexts/UserContext';
 
 interface IPersonHeaderProps {
   name?: string;
@@ -18,11 +19,13 @@ interface IPersonHeaderProps {
 const PersonHeader = (props: IPersonHeaderProps) => {
   //  const imageAltText = 'Profile image';
 
+  const userContext = useContext(UserContext);
+
   const deletePerson = useCallback(() => {
     if (
       window.confirm(`Are you sure you want to remove person: ${props.name}?`)
     ) {
-      FaceToFace.delete(`persons/${props.id}`)
+      FaceToFace.delete(`persons/${props.id}`, { headers: { Authorization: `Bearer ${userContext.bearerToken}`}})
         .then(() => {
           if (props.personDeleted) {
             props.personDeleted(props.id);
@@ -34,7 +37,7 @@ const PersonHeader = (props: IPersonHeaderProps) => {
           );
         });
     }
-  }, [props]);
+  }, [props, userContext.bearerToken]);
 
   const deletePersonButton = props.showDeletePerson ? (
     <div className={styles.DeletePersonButton} onClick={deletePerson}>

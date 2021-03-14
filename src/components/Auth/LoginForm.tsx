@@ -80,7 +80,7 @@ export const LoginForm = () => {
                 <abbr title="required">*</abbr>
               </strong>
                   .
-                  </p>
+            </p>
             <section>
               <h3>Credentials</h3>
               <p>

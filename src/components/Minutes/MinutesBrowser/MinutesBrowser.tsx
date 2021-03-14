@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, { useContext, useEffect, useState } from 'react';
 import PropTypes from 'prop-types';
 import { format } from 'date-fns';
 import { AxiosError, AxiosResponse } from 'axios';
@@ -11,21 +11,24 @@ import MoreSessionTail from './ShowMoreButton/ShowMoreButton';
 import { MinutesInterface } from '../../../interfaces/minutes.interface';
 
 import styles from './MinutesBrowser.module.css';
+import { UserContext } from '../../../contexts/UserContext';
 
-interface IOneOnOneBrowserProps {
+interface MinutesBrowserProps {
   personId: number;
 }
 
-const MinutesBrowser = (props: IOneOnOneBrowserProps) => {
+const MinutesBrowser = (props: MinutesBrowserProps) => {
   const [sessionsLoaded, setSessionsLoaded] = useState(false);
   const [sessions, setSessions] = useState<Array<MinutesInterface>>([]);
 
   // Whether all sessions should be shown or just the current session
   const [showAllSessions, setShowAllSessions] = useState(false);
 
+  const userContext = useContext(UserContext);
+
   useEffect(() => {
     if (!sessionsLoaded) {
-      FaceToFace.get(`/persons/${props.personId}/minutes`)
+      FaceToFace.get(`/persons/${props.personId}/minutes`, { headers: { Authorization: `Bearer ${userContext.bearerToken}`}})
         .then((response: AxiosResponse<Array<MinutesInterface>>) => {
           setSessions(response.data);
           setSessionsLoaded(true);
@@ -34,19 +37,19 @@ const MinutesBrowser = (props: IOneOnOneBrowserProps) => {
           console.error('Something went wrong retrieving minutes', error);
         });
     }
-  }, [sessionsLoaded, props.personId]);
+  }, [sessionsLoaded, props.personId, userContext.bearerToken]);
 
   const updateMinutes = (
     minutesId: number,
-    session: MinutesInterface | undefined,
+    minutes: MinutesInterface | undefined,
   ): void => {
-    if (!session) {
+    if (!minutes) {
       return;
     }
     // TODO: set some kind of dirty flag
     // TODO: batch up changes
     // TODO: serialise so that create requests complete before updates
-    FaceToFace.put(`/persons/${props.personId}/minutes/${minutesId}`, session)
+    FaceToFace.put(`/persons/${props.personId}/minutes/${minutesId}`, minutes, { headers: { Authorization: `Bearer ${userContext.bearerToken}`}})
       .then(() => {
         // TODO update some kind of dirty flag / 'saved' indicator
       })
@@ -90,14 +93,14 @@ const MinutesBrowser = (props: IOneOnOneBrowserProps) => {
       followUps: followUps,
       nextTime: '',
       newBusiness: '',
-    })
+    }, { headers: { Authorization: `Bearer ${userContext.bearerToken}`}})
       .then((response: AxiosResponse<MinutesInterface>) => {
         setSessions([response.data, ...sessions]);
       })
       .catch((error: AxiosError) => {
         console.error('Something went wrong posting new minutes', error);
       });
-  }, [sessions, props.personId]);
+  }, [sessions, props.personId, userContext.bearerToken]);
 
   const toggleShowMoreSessions = () => {
     setShowAllSessions(!showAllSessions);

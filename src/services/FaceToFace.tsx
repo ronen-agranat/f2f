@@ -1,4 +1,4 @@
-const axios = require('axios').default;
+import axios from 'axios';
 
 const FaceToFace = axios.create({
   baseURL: process.env.REACT_APP_F2F_SERVER_ENDPOINT || 'http://localhost:3001'

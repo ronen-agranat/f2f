@@ -6,6 +6,7 @@ import { PersonFinder } from './PersonFinder/PersonFinder';
 import { PersonSwitcherContext } from '../../contexts/PersonSwitcherContext';
 import FaceToFace from '../../services/FaceToFace';
 import { AxiosError } from 'axios';
+import { UserContext } from '../../contexts/UserContext';
 
 interface SendToProps {
   textToSend: string;
@@ -14,6 +15,8 @@ interface SendToProps {
 export const SendTo = (props: SendToProps) => {
   const personSwitcherContext = useContext(PersonSwitcherContext);
   const ref = createRef<HTMLInputElement>();
+
+  const userContext = useContext(UserContext);
 
   useEffect(() => {
     if (personSwitcherContext.isPersonSwitcherVisible) {
@@ -26,7 +29,7 @@ export const SendTo = (props: SendToProps) => {
   const personSelected = (id: number) => {
     FaceToFace.post(`/persons/${id}/minutes/latest/next-time/append`, {
       textToAppend: props.textToSend,
-    })
+    }, { headers: { Authorization: `Bearer ${userContext.bearerToken}`}})
       .then(() => {
         // TODO update some kind of dirty flag / 'saved' indicator
         // TODO: Show a toast 'success' message

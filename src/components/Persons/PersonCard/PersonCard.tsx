@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, { useContext, useEffect, useState } from 'react';
 import PropTypes from 'prop-types';
 import PersonHeader from '../PersonHeader/PersonHeader';
 import MinutesBrowser from '../../Minutes/MinutesBrowser/MinutesBrowser';
@@ -9,6 +9,7 @@ import styles from './PersonCard.module.css';
 import { AxiosError, AxiosResponse } from 'axios';
 
 import { useParams } from 'react-router-dom';
+import { UserContext } from '../../../contexts/UserContext';
 
 interface IPersonCardProps {
   personId?: number;
@@ -26,9 +27,11 @@ const PersonCard = (props: IPersonCardProps) => {
   const [personLoaded, setPersonLoaded] = useState(false);
   const [error, setError] = useState('');
 
+  const userContext = useContext(UserContext);
+
   useEffect(() => {
     if (!personLoaded) {
-      FaceToFace.get(`/persons/${personId}`)
+      FaceToFace.get(`/persons/${personId}`, { headers: { Authorization: `Bearer ${userContext.bearerToken}`}})
         .then((response: AxiosResponse<Person>) => {
           setPersonState(response.data);
           setPersonLoaded(true);
@@ -39,7 +42,7 @@ const PersonCard = (props: IPersonCardProps) => {
           }
         });
     }
-  }, [personLoaded, personId]);
+  }, [personLoaded, personId, userContext.bearerToken]);
 
   let personContent = null;
 
