@@ -53,7 +53,7 @@ export const LoginForm = () => {
           })
             .then((response: AxiosResponse) => {
               // Most important part: extract and store bearer token into application state
-              const bearerToken = response!.data!.access_token;
+              const bearerToken = response!.data!.accessToken;
               // TODO: How can setBearerToken be undefined?
               if (userContext.setBearerToken) {
                 userContext.setBearerToken(bearerToken);

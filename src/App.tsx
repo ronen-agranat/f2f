@@ -59,10 +59,6 @@ function App() {
     setBearerToken
   }
 
-  if (!Boolean(bearerToken)) {
-    console.log('Bearer token is not set');
-  }
-
   const isAuthenticated = Boolean(bearerToken);
 
   const authenticatedRouter = <Router>
