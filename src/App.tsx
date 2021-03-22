@@ -17,6 +17,8 @@ import { UserContext } from './contexts/UserContext';
 import { LoginForm } from './components/Auth/LoginForm';
 import { CreateUserForm } from './components/Auth/CreateUserForm';
 
+import { isLoggedIn } from 'axios-jwt'
+
 function App() {
   // Authentication
   const [bearerToken, setBearerToken] = useState('');
@@ -54,12 +56,13 @@ function App() {
   );
 
   // User context; see ./contexts/UserContext.tsx
+  // TODO: No longer used for access token and refresh token; might be handy for user profile.
   const userContextValue = {
     bearerToken,
     setBearerToken
   }
 
-  const isAuthenticated = Boolean(bearerToken);
+  const isAuthenticated = isLoggedIn();
 
   const authenticatedRouter = <Router>
     <NavBar />
