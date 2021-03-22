@@ -1,4 +1,4 @@
-import React, { useContext } from 'react';
+import React, { useContext, useState } from 'react';
 import { Formik, Form, Field, ErrorMessage } from 'formik';
 import { Link, useHistory, useParams } from 'react-router-dom';
 
@@ -24,6 +24,8 @@ export const LoginForm = () => {
   let history = useHistory();
 
   const userContext = useContext(UserContext);
+
+  const [error, setError] = useState('');
 
   return (
     <div className={styles.LoginForm}>
@@ -64,13 +66,14 @@ export const LoginForm = () => {
               history.push('/');
             })
             .catch((error: AxiosError) => {
-              console.error('Something went wrong creating person', error);
+              setError(`Network error while logging in: ${error.message}`);
               setSubmitting(false);
             });
         }}
       >
         {({ isSubmitting }) => (
           <Form>
+            { Boolean(error) ? <p style={{color: 'red'}}>{error}</p> : null }
             <h2>
               {'Welcome! Please login to your account'}
             </h2>
@@ -88,7 +91,7 @@ export const LoginForm = () => {
                   <span>Username:&nbsp;</span>
                   <strong>
                     <abbr title="required">*</abbr>&nbsp;
-                      </strong>
+                  </strong>
                 </label>
                 <Field name="username" />
                 {/*TODO div cannot appear within p*/}
@@ -99,7 +102,7 @@ export const LoginForm = () => {
                   <span>Password:&nbsp;</span>
                   <strong>
                     <abbr title="required">*</abbr>&nbsp;
-                      </strong>
+                  </strong>
                 </label>
                 <Field name="password" type="password"/>
                 <ErrorMessage name="password" component="div" />
