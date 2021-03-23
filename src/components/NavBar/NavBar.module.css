@@ -12,7 +12,8 @@
 }
 
 .NavBar nav ul li {
-  display: block;
+  display: inline;
+  margin-right: 7px;
 }
 
 .NavBar nav ul li a,
