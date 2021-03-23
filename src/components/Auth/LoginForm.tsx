@@ -20,7 +20,11 @@ interface LoginFormErrors {
   password?: string | undefined;
 }
 
-export const LoginForm = () => {
+interface ILoginFormProps {
+  setIsAuthenticated: (arg0: boolean) => void;
+}
+
+export const LoginForm = (props: ILoginFormProps) => {
   let history = useHistory();
 
   const [error, setError] = useState('');
@@ -58,6 +62,9 @@ export const LoginForm = () => {
 
               // Tell Formik that we are done
               setSubmitting(false);
+
+              props.setIsAuthenticated(true);
+
               // Navigate to root page
               history.push('/');
             })

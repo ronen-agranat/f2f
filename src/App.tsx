@@ -5,6 +5,7 @@ import {
   BrowserRouter as Router,
   Switch,
   Route,
+  Redirect,
 } from 'react-router-dom';
 import NewPersonForm from './components/Persons/NewPersonForm/NewPersonForm';
 
@@ -18,12 +19,13 @@ import { CreateUserForm } from './components/Auth/CreateUserForm';
 
 import { isLoggedIn } from 'axios-jwt'
 
-function App() {
+export const App = () => {
   // Person switcher
 
   // TODO: Move into context
   const [showSendTo, setShowSendTo] = useState(false);
   const [selectedText, setSelectedText] = useState('');
+  const [isAuthenticated, setIsAuthenticated] = useState(isLoggedIn());
 
   const personSwitcherContextValue = {
     // Expose state via context to all context consumers.
@@ -51,36 +53,35 @@ function App() {
     </>
   );
 
-  const isAuthenticated = isLoggedIn();
-
-  const authenticatedRouter = <Router>
-    <NavBar />
-    {/* Move into component that is powered by context provider */}
-    {showSendTo ? sendTo : null}
-    <Switch>
-      <Route path='/' exact component={PersonsBrowser} />
-      <Route path='/persons/' exact component={PersonsBrowser} />
-      <Route path='/persons/create' exact component={NewPersonForm} />
-      <Route path='/persons/:id/edit' exact component={NewPersonForm} />
-      <Route path='/persons/:id' exact component={PersonCard} />
-      <Route path='/users/create' exact component={CreateUserForm} />
-      <Route component={NotFound} />
-    </Switch>
-  </Router>;
-  
-  const unauthenticatedRouter = <Router>
-    <Switch>
-      <Route path='/users/create' exact component={CreateUserForm} />
-      <Route component={LoginForm} />
-    </Switch>
-  </Router>;
-
-  // Outermost application
   return (
     <PersonSwitcherContext.Provider value={personSwitcherContextValue}>
-      { isAuthenticated ? authenticatedRouter : unauthenticatedRouter }
+      <Router>
+        <NavBar setIsAuthenticated={setIsAuthenticated} isAuthenticated={isAuthenticated} />
+        {/* Move into component that is powered by context provider */}
+        {showSendTo ? sendTo : null}
+        <Switch>
+          <Route path='/' exact>
+            { isAuthenticated ? <PersonsBrowser/> : <Redirect to='/login' /> }
+          </Route>
+          <Route path='/persons/' exact>
+            { isAuthenticated ? <PersonsBrowser/> : <Redirect to='/login' /> }
+          </Route>
+          <Route path='/persons/create' exact>
+            { isAuthenticated ? <NewPersonForm/> : <Redirect to='/login' /> }
+          </Route>
+          <Route path='/persons/:id/edit' exact>
+            { isAuthenticated ? <NewPersonForm/> : <Redirect to='/login' /> }
+          </Route>
+          <Route path='/persons/:id' exact>
+            { isAuthenticated ? <PersonCard/> : <Redirect to='/login' /> }
+          </Route>
+          <Route path='/users/create' exact component={CreateUserForm} />
+          <Route path='/login/' exact>
+            <LoginForm setIsAuthenticated={setIsAuthenticated} />
+          </Route>
+          <Route component={NotFound} />
+        </Switch>
+      </Router>;
     </PersonSwitcherContext.Provider>
   );
 }
-
-export default App;
