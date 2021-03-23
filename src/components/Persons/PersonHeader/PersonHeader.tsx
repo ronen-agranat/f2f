@@ -1,4 +1,4 @@
-import React, { useCallback, useContext } from 'react';
+import React, { useCallback } from 'react';
 import PropTypes from 'prop-types';
 import styles from './PersonHeader.module.css';
 import { Link } from 'react-router-dom';

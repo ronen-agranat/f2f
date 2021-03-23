@@ -1,4 +1,4 @@
-import React, { useContext, useEffect, useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import PropTypes from 'prop-types';
 import PersonHeader from '../PersonHeader/PersonHeader';
 import MinutesBrowser from '../../Minutes/MinutesBrowser/MinutesBrowser';

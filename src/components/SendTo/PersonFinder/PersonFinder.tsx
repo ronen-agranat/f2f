@@ -1,4 +1,4 @@
-import React, { ChangeEvent, forwardRef, Ref, useContext, useEffect, useState } from 'react';
+import React, { ChangeEvent, forwardRef, Ref, useEffect, useState } from 'react';
 import PropTypes from 'prop-types';
 
 import styles from './PersonFinder.module.css';
