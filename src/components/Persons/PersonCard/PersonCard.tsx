@@ -9,7 +9,6 @@ import styles from './PersonCard.module.css';
 import { AxiosError, AxiosResponse } from 'axios';
 
 import { useParams } from 'react-router-dom';
-import { UserContext } from '../../../contexts/UserContext';
 
 interface IPersonCardProps {
   personId?: number;
@@ -27,11 +26,9 @@ const PersonCard = (props: IPersonCardProps) => {
   const [personLoaded, setPersonLoaded] = useState(false);
   const [error, setError] = useState('');
 
-  const userContext = useContext(UserContext);
-
   useEffect(() => {
     if (!personLoaded) {
-      FaceToFace.get(`/persons/${personId}`, { headers: { Authorization: `Bearer ${userContext.bearerToken}`}})
+      FaceToFace.get(`/persons/${personId}`)
         .then((response: AxiosResponse<Person>) => {
           setPersonState(response.data);
           setPersonLoaded(true);
@@ -42,7 +39,7 @@ const PersonCard = (props: IPersonCardProps) => {
           }
         });
     }
-  }, [personLoaded, personId, userContext.bearerToken]);
+  }, [personLoaded, personId]);
 
   let personContent = null;
 

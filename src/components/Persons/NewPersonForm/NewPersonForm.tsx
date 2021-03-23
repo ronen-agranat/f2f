@@ -23,7 +23,6 @@ import styles from './NewPersonForm.module.css';
 import FaceToFace from '../../../services/FaceToFace';
 import { AxiosError, AxiosResponse } from 'axios';
 import { Person } from '../../../interfaces/person.interface';
-import { UserContext } from '../../../contexts/UserContext';
 
 // TODO: Touchpoint for adding fields; not DRY
 interface INewPersonFormValues {
@@ -67,11 +66,9 @@ const NewPersonForm = () => {
   // If in edit mode, person needs to be loaded first
   const [personLoaded, setPersonLoaded] = useState(false);
 
-  const userContext = useContext(UserContext);
-
   useEffect(() => {
     if (editMode && !personLoaded) {
-      FaceToFace.get(`/persons/${personId}`, { headers: { Authorization: `Bearer ${userContext.bearerToken}`}})
+      FaceToFace.get(`/persons/${personId}`)
         .then((response: AxiosResponse<Person>) => {
           setPersonState(response.data);
           setPersonLoaded(true);
@@ -80,7 +77,7 @@ const NewPersonForm = () => {
           console.error('Something went wrong with fetching data', error);
         });
     }
-  }, [personLoaded, personId, editMode, userContext.bearerToken]);
+  }, [personLoaded, personId, editMode]);
 
   return (
     <div className={styles.NewPersonForm}>
@@ -118,7 +115,7 @@ const NewPersonForm = () => {
               phone: values.phone,
               team: values.team,
               imageUrl: values.imageUrl,
-            }, { headers: { Authorization: `Bearer ${userContext.bearerToken}`}})
+            })
               .then((response: AxiosResponse) => {
                 console.debug('Got create person response', response);
                 // TODO Check id of added person and navigate there

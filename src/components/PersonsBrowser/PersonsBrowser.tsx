@@ -6,17 +6,15 @@ import { AxiosError, AxiosResponse } from 'axios';
 import { Person } from '../../interfaces/person.interface';
 import PersonHeader from '../Persons/PersonHeader/PersonHeader';
 import { AddPersonButton } from './AddPersonButton/AddPersonButton';
-import { UserContext } from '../../contexts/UserContext';
 
 const PersonsBrowser = () => {
   const [personsLoaded, setPersonsLoaded] = useState(false);
   const [persons, setPersons] = useState<Person[]>([]);
   const [error, setError] = useState<string>();
-  const userContext = useContext(UserContext);
 
   useEffect(() => {
     if (!personsLoaded) {
-      FaceToFace.get(`/persons/`, { headers: { Authorization: `Bearer ${userContext.bearerToken}`}})
+      FaceToFace.get(`/persons/`)
         .then((response: AxiosResponse<Person[]>) => {
           setPersons(response.data);
           setPersonsLoaded(true);
@@ -26,7 +24,7 @@ const PersonsBrowser = () => {
           setError(`Could not retrieve person list: ${error.message}`);
         });
     }
-  }, [personsLoaded, userContext.bearerToken]);
+  }, [personsLoaded]);
 
   if (!personsLoaded && !error) {
     return <p>

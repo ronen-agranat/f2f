@@ -6,7 +6,6 @@ import { Person } from '../../../interfaces/person.interface';
 import FaceToFace from '../../../services/FaceToFace';
 import { AxiosError, AxiosResponse } from 'axios';
 import PersonHeader from '../../Persons/PersonHeader/PersonHeader';
-import { UserContext } from '../../../contexts/UserContext';
 
 interface PersonFinderProps {
   personSelected: (personId: number) => void;
@@ -18,11 +17,9 @@ export const PersonFinder = forwardRef(
   const [persons, setPersons] = useState<Person[]>([]);
   const [searchForName, setSearchForName] = useState('');
 
-  const userContext = useContext(UserContext);
-
   useEffect(() => {
     if (!personsLoaded) {
-      FaceToFace.get(`/persons/`, { headers: { Authorization: `Bearer ${userContext.bearerToken}`}})
+      FaceToFace.get(`/persons/`)
         .then((response: AxiosResponse<Person[]>) => {
           setPersons(response.data);
           setPersonsLoaded(true);
@@ -31,7 +28,7 @@ export const PersonFinder = forwardRef(
           console.error('Something went wrong with fetching data', error);
         });
     }
-  }, [personsLoaded, userContext.bearerToken]);
+  }, [personsLoaded]);
 
   let personCards: React.ReactNode[] = [];
 

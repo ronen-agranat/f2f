@@ -13,16 +13,12 @@ import { NotFound } from './components/ErrorPages/NotFound/NotFound';
 import { Backdrop } from './components/UI/Backdrop/Backdrop';
 import { SendTo } from './components/SendTo/SendTo';
 import { PersonSwitcherContext } from './contexts/PersonSwitcherContext';
-import { UserContext } from './contexts/UserContext';
 import { LoginForm } from './components/Auth/LoginForm';
 import { CreateUserForm } from './components/Auth/CreateUserForm';
 
 import { isLoggedIn } from 'axios-jwt'
 
 function App() {
-  // Authentication
-  const [bearerToken, setBearerToken] = useState('');
-
   // Person switcher
 
   // TODO: Move into context
@@ -55,13 +51,6 @@ function App() {
     </>
   );
 
-  // User context; see ./contexts/UserContext.tsx
-  // TODO: No longer used for access token and refresh token; might be handy for user profile.
-  const userContextValue = {
-    bearerToken,
-    setBearerToken
-  }
-
   const isAuthenticated = isLoggedIn();
 
   const authenticatedRouter = <Router>
@@ -89,9 +78,7 @@ function App() {
   // Outermost application
   return (
     <PersonSwitcherContext.Provider value={personSwitcherContextValue}>
-      <UserContext.Provider value={userContextValue}>
-        { isAuthenticated ? authenticatedRouter : unauthenticatedRouter }
-      </UserContext.Provider>
+      { isAuthenticated ? authenticatedRouter : unauthenticatedRouter }
     </PersonSwitcherContext.Provider>
   );
 }

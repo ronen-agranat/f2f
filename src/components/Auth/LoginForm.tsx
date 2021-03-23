@@ -6,7 +6,6 @@ import FaceToFace, { authResponseToAuthTokens } from '../../services/FaceToFace'
 import { AxiosError, AxiosResponse } from 'axios';
 
 import styles from './LoginForm.module.css';
-import { UserContext } from '../../contexts/UserContext';
 import { setAuthTokens } from 'axios-jwt';
 
 // TODO: Touchpoint for adding fields; not DRY
@@ -23,9 +22,6 @@ interface LoginFormErrors {
 
 export const LoginForm = () => {
   let history = useHistory();
-
-  // TODO: Retrieve some user context from /profile API
-  const userContext = useContext(UserContext);
 
   const [error, setError] = useState('');
 

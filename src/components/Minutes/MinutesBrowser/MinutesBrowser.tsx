@@ -11,7 +11,6 @@ import MoreSessionTail from './ShowMoreButton/ShowMoreButton';
 import { MinutesInterface } from '../../../interfaces/minutes.interface';
 
 import styles from './MinutesBrowser.module.css';
-import { UserContext } from '../../../contexts/UserContext';
 
 interface MinutesBrowserProps {
   personId: number;
@@ -24,11 +23,9 @@ const MinutesBrowser = (props: MinutesBrowserProps) => {
   // Whether all sessions should be shown or just the current session
   const [showAllSessions, setShowAllSessions] = useState(false);
 
-  const userContext = useContext(UserContext);
-
   useEffect(() => {
     if (!sessionsLoaded) {
-      FaceToFace.get(`/persons/${props.personId}/minutes`, { headers: { Authorization: `Bearer ${userContext.bearerToken}`}})
+      FaceToFace.get(`/persons/${props.personId}/minutes`)
         .then((response: AxiosResponse<Array<MinutesInterface>>) => {
           setSessions(response.data);
           setSessionsLoaded(true);
@@ -37,7 +34,7 @@ const MinutesBrowser = (props: MinutesBrowserProps) => {
           console.error('Something went wrong retrieving minutes', error);
         });
     }
-  }, [sessionsLoaded, props.personId, userContext.bearerToken]);
+  }, [sessionsLoaded, props.personId]);
 
   const updateMinutes = (
     minutesId: number,
@@ -49,7 +46,7 @@ const MinutesBrowser = (props: MinutesBrowserProps) => {
     // TODO: set some kind of dirty flag
     // TODO: batch up changes
     // TODO: serialise so that create requests complete before updates
-    FaceToFace.put(`/persons/${props.personId}/minutes/${minutesId}`, minutes, { headers: { Authorization: `Bearer ${userContext.bearerToken}`}})
+    FaceToFace.put(`/persons/${props.personId}/minutes/${minutesId}`, minutes)
       .then(() => {
         // TODO update some kind of dirty flag / 'saved' indicator
       })
@@ -93,14 +90,14 @@ const MinutesBrowser = (props: MinutesBrowserProps) => {
       followUps: followUps,
       nextTime: '',
       newBusiness: '',
-    }, { headers: { Authorization: `Bearer ${userContext.bearerToken}`}})
+    })
       .then((response: AxiosResponse<MinutesInterface>) => {
         setSessions([response.data, ...sessions]);
       })
       .catch((error: AxiosError) => {
         console.error('Something went wrong posting new minutes', error);
       });
-  }, [sessions, props.personId, userContext.bearerToken]);
+  }, [sessions, props.personId]);
 
   const toggleShowMoreSessions = () => {
     setShowAllSessions(!showAllSessions);
