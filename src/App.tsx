@@ -75,7 +75,9 @@ export const App = () => {
           <Route path='/persons/:id' exact>
             { isAuthenticated ? <PersonCard/> : <Redirect to='/login' /> }
           </Route>
-          <Route path='/users/create' exact component={CreateUserForm} />
+          <Route path='/users/create' exact component={CreateUserForm}>
+            <CreateUserForm setIsAuthenticated={setIsAuthenticated} />
+          </Route>``
           <Route path='/login/' exact>
             <LoginForm setIsAuthenticated={setIsAuthenticated} />
           </Route>

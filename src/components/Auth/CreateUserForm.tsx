@@ -2,8 +2,10 @@ import React from 'react';
 import { Formik, Form, Field, ErrorMessage } from 'formik';
 import { useHistory } from 'react-router-dom';
 
-import FaceToFace from '../../services/FaceToFace';
+import FaceToFace, { authResponseToAuthTokens } from '../../services/FaceToFace';
 import { AxiosError, AxiosResponse } from 'axios';
+
+import { setAuthTokens } from 'axios-jwt';
 
 import styles from './CreateUserForm.module.css';
 
@@ -27,7 +29,11 @@ interface CreateUserFormErrors {
   phone?: string | undefined;
 }
 
-export const CreateUserForm = () => {
+interface CreateUserFormProps {
+  setIsAuthenticated: (isAuthenticated: boolean) => void;
+}
+
+export const CreateUserForm = (props: CreateUserFormProps) => {
   let history = useHistory();
   return (
     <div className={styles.CreateUserForm}>
@@ -57,9 +63,13 @@ export const CreateUserForm = () => {
             phone: values.phone
           })
             .then((response: AxiosResponse) => {
-              console.debug('Got create user response', response);
               // Tell Formik that we are done
               setSubmitting(false);
+
+              props.setIsAuthenticated(true);
+
+              setAuthTokens(authResponseToAuthTokens(response.data));
+
               // Navigate to root page
               history.push('/');
             })
